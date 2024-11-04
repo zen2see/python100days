@@ -17,7 +17,7 @@ def encrypt(original_text, shift_amount):
 def decrypt(coded_text, shift_amount):
     decrypted_text = ""
     for letter in coded_text:
-        unshifted_position = alphabet.index(letter) - shift_amount 
+        unshifted_position = alphabet.index(letter) + shift_amount 
         unshifted_position %= len(alphabet)
         print(unshifted_position)
         decrypted_text += alphabet[unshifted_position]
