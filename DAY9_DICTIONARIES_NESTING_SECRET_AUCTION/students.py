@@ -8,8 +8,8 @@ student_scores = {
 student_grades = {}
 for key in student_scores:
     # Compare value
-    print(key)
-    print(student_scores[key])
+    # print(key)
+    # print(student_scores[key])
     if student_scores[key] >= 91:
         student_grades[key] = "Outstanding"
     elif 81 >= student_scores[key]:
