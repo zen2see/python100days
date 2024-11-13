@@ -13,9 +13,11 @@ for key,value in student_scores.items():
     # print(key)
     # print(student_scores[key])
     if student_scores[key] >= 91:
-        student_grades[key] = "Outsanding"
+        student_grades[key] = "Outstanding"
     elif student_scores[key] >= 81 < 91:
         student_grades[key] = "Exceeds Expectations"
-    elif student_scores[key] < 81:
+    elif student_scores[key] > 70 < 81:
         student_grades[key] = "Acceptable"
+    else:
+        student_grades[key] = "Fail"
 print(student_grades)
