@@ -8,7 +8,6 @@ dealer = []
 playercards = []
 dealercards = []
 cardsl = {1:1, 2:2, 3:3, 4:4, 5:5, 6:6, 7:7, 8:8, 9:9, 10:10, 'J':10, 'Q':10, 'K':10, 'A':11}
-cards = [11,2,3,4,5,6,7,8,9,10,10,10,10] 
 gameover = False
 
 # define our clear function
@@ -23,25 +22,21 @@ def clear():
 def randomcard():
     """
     Returns a random card from the deck
-    """
     # Get random dictionary pair in dictionary
     # Using random.choice() + list() + items()
     # random_card = random.choice(list(cards.items()))
-    # OR 
+    # OR random.choice(cards)
+    """ 
+    cards = [11,2,3,4,5,6,7,8,9,10,10,10,10] 
     card = random.choice(cards)
-    """
-    print("The random card is " + str(random_card))
-    print(random_card[0])
-    print(random_card[1])
-    """
-    # print("The random card is " + str(random_card[0]))
-    #return random_card[0]
+    # print("The random card is " + str(random_card))
+    # print(random_card[0])
+    # print(random_card[1])
     return card
 
 def calculate_score(cards):
     """
-    Take a list of cards and return the score calculated
-    from the cards
+    Take a list of cards and return the score calculated from the cards
     """
     if sum(cards) == 21 and len(cards) == 2:
         return 0
@@ -50,9 +45,16 @@ def calculate_score(cards):
         cards.append(1)
     return sum (cards)
 
+def comparescores(playerscore, dealerscore):
+    if playerscore == dealerscore:
+        return "Draw "
+    elif dealerscore == 0:
+        return "Lose, opponent has Blackjack"
+    elif playerscore == 0:
+        return "Win you have Blackjack"
+
 def playblackjack():
-    print(artblackjack.logo)
-    play = input("Another to play a game of Blackjack? Type 'y' or 'n' ").lower()
+    play = input("New player? Join a game of Blackjack? Type 'y' or 'n' ").lower()
     if play == 'y':
         players.append(1)
         clear()
@@ -85,6 +87,8 @@ def blackjack():
             playercards.append(randomcard())
         else:
             gameover = True
-playblackjack()
+
+while not gameover:
+    playblackjack()
 
     
