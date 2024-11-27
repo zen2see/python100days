@@ -57,25 +57,25 @@ while not gameover:
             gameover = True
 
 while dealerscore != 0 and dealerscore < 17:
-    dealercards.append(randomcard)
+    dealercards.append(randomcard())
     dealerscore = calculate_score(dealercards)
     print(f"Dealer's cards {dealercards}, score: {dealerscore}")
 
 def comparescores(pscore, dscore):
     if pscore == dscore:
-        return "Draw "
+        return "Draw\n"
     elif dscore == 0:
-        return "Lose, opponent has Blackjack"
+        return "Lose, opponent has Blackjack\n"
     elif pscore == 0:
-        return "Win you have Blackjack"
+        return "Win you have Blackjack\n"
     elif pscore > 21:
-        return "Lose, you went over 21"
+        return "Lose, you went over 21\n"
     elif dscore > 21:
-        return "Opponent went over. You win"
+        return "Opponent went over. You win\n"
     elif pscore > dscore:
-        return "You win!"
+        return "You win!\n"
     else: 
-        return "You lose!"
+        return "You lose!\n"
 
 
 print(f"Your final hand: {playercards}, final score: {playerscore}")
@@ -83,25 +83,3 @@ print(f"Dealers final hand: {dealercards}, final score: {dealerscore}")
 print(comparescores(playerscore, dealerscore))
 
 
-
-
-"""
-def calculate_score(cards):
- 
-    Take a list of cards and return the score calculated from the cards
-    
-    if sum(cards) == 21 and len(cards) == 2:
-        return 0
-    if 11 in cards and sum(cards) > 21:
-        cards.remove(11)
-        cards.append(1)
-
-    return sum(cards)     
-"""
-
-
-
-
-
-
-# calculate_score
