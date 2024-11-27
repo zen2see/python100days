@@ -43,26 +43,56 @@ def calculate_score(cards):
     """
     if sum(cards) == 21 and len(cards) == 2:
         return 0
+    
     if 11 in cards and sum(cards) > 21:
         cards.remove(11)
         cards.append(1)
+        
     return sum(cards)
 
-def comparescores(playerscore, dealerscore):
-    if playerscore == dealerscore:
+for _ in range(2):
+        playercards.append(randomcard())
+        dealercards.append(randomcard())
+
+while not gameover:
+    playerscore = calculate_score(playercards)
+    print(f"Player's cards {playercards}, score {playerscore}")
+    dealerscore = calculate_score(dealercards)
+    # print(f"Dealer's cards {dealercards} score = {dealerscore}")
+    print(f"Dealer 1st card {dealercards[0]}")
+    if playerscore == 0 or dealerscore == 0 or playerscore > 21:
+        gameover = True
+    else:
+        dealagain = input("Type 'y' to get another card, type 'n' to pass: ")
+        if dealagain == 'y':
+            playercards.append(randomcard())
+        else:
+            gameover = True
+    
+while dealerscore != 0 and dealerscore < 17:
+    dealercards.append(randomcard)
+    dealerscore = calculate_score(dealercards)
+    print(f"Dealer's cards {dealercards}, score: {dealerscore}")        
+
+def comparescores(pscore, dscore):
+    if pscore == dscore:
         return "Draw "
-    elif dealerscore == 0:
+    elif dscore == 0:
         return "Lose, opponent has Blackjack"
-    elif playerscore == 0:
+    elif pscore == 0:
         return "Win you have Blackjack"
-    elif playerscore > 21:
+    elif pscore > 21:
         return "Lose, you went over 21"
-    elif dealerscore > 21:
+    elif dscore > 21:
         return "Opponent went over. You win"
-    elif playerscore > dealerscore:
+    elif pscore > dscore:
         return "You win!"
     else: 
         return "You lose!"
+
+print(f"Your final hand: {playercards}, final score: {playerscore}")
+print(f"Dealers final hand: {dealercards}, final score: {dealerscore}")
+print(comparescores(playerscore, dealerscore))
 
 """
 def playblackjack():
@@ -104,7 +134,7 @@ def blackjack():
                 gameover = True
 
 playblackjack()
-"""
+
 def blackjack():
     global gameover
     print(artblackjack.logo)
@@ -113,31 +143,29 @@ def blackjack():
     # playerscore = -1 
     # dealerscore = -1
     # gameover = False
-    for _ in range(2):
-        playercards.append(randomcard())
-        dealercards.append(randomcard())
-    while not gameover:
-        playerscore = calculate_score(playercards)
-        print(f"Player's cards {playercards}, score {playerscore}")
-        dealerscore = calculate_score(dealercards)
-        # print(f"Dealer's cards {dealercards} score = {dealerscore}")
-        print(f"Dealer 1st card {dealercards[0]}")
-        if playerscore == 0 or dealerscore == 0 or playerscore > 21:
-            gameover = True
-        else:
-            dealagain = input("Type 'y' to get another card, type 'n' to pass: ")
-            if dealagain == 'y':
-                playercards.append(randomcard())
-            else:
-                gameover = True
-    while dealerscore != 0 and dealerscore < 17:
-        dealercards.append(randomcard)
-        dealerscore = calculate_score(dealercards)
-        print(f"Dealer's cards {dealercards}, score: {dealerscore}")
+   
+    # while not gameover:
+    #     playerscore = calculate_score(playercards)
+    #     print(f"Player's cards {playercards}, score {playerscore}")
+    #     dealerscore = calculate_score(dealercards)
+    #     # print(f"Dealer's cards {dealercards} score = {dealerscore}")
+    #     print(f"Dealer 1st card {dealercards[0]}")
+    #     if playerscore == 0 or dealerscore == 0 or playerscore > 21:
+    #         gameover = True
+    #     else:
+    #         dealagain = input("Type 'y' to get another card, type 'n' to pass: ")
+    #         if dealagain == 'y':
+    #             playercards.append(randomcard())
+    #         else:
+    #             gameover = True
+    # while dealerscore != 0 and dealerscore < 17:
+    #     dealercards.append(randomcard)
+    #     dealerscore = calculate_score(dealercards)
+    #     print(f"Dealer's cards {dealercards}, score: {dealerscore}")
 
-    print(f"Your final hand: {playercards}, final score: {playerscore}")
-    print(f"Dealers final hand: {dealercards}, final score: {dealerscore}")
-    print(comparescores(playerscore, dealerscore))
+    # print(f"Your final hand: {playercards}, final score: {playerscore}")
+    # print(f"Dealers final hand: {dealercards}, final score: {dealerscore}")
+    # print(comparescores(playerscore, dealerscore))
     #       for _ in range(2):
             # for n in players:
             # players.append(playercards.append[randomcard()])
@@ -148,9 +176,12 @@ def blackjack():
 
 while input("Do you want to play a game of Blackjack? Type 'y' or 'n': ").lower() == "y":
     clear()
-    blackjack()
+    #blackjack()
     
 
 
 
         
+
+
+"""
