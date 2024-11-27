@@ -5,7 +5,11 @@ import artblackjack
 x = 1
 players = []
 dealer = []
-
+playercards = []
+dealercards = []
+playerscore = -1 
+dealerscore = -1
+gameover = False
 cardsl = {1:1, 2:2, 3:3, 4:4, 5:5, 6:6, 7:7, 8:8, 9:9, 10:10, 'J':10, 'Q':10, 'K':10, 'A':11}
 
 
@@ -39,11 +43,9 @@ def calculate_score(cards):
     """
     if sum(cards) == 21 and len(cards) == 2:
         return 0
-    
     if 11 in cards and sum(cards) > 21:
         cards.remove(11)
         cards.append(1)
-
     return sum(cards)
 
 def comparescores(playerscore, dealerscore):
@@ -104,12 +106,13 @@ def blackjack():
 playblackjack()
 """
 def blackjack():
+    global gameover
     print(artblackjack.logo)
-    playercards = []
-    dealercards = []
-    playerscore = -1 
-    dealerscore = -1
-    gameover = False
+    # playercards = []
+    # dealercards = []
+    # playerscore = -1 
+    # dealerscore = -1
+    # gameover = False
     for _ in range(2):
         playercards.append(randomcard())
         dealercards.append(randomcard())
@@ -143,7 +146,7 @@ def blackjack():
     #         dealercards.append(randomcard())
         
 
-while input("Do you want t o play a game of Blackjack? Type 'y' or 'n': ").lower() == "y":
+while input("Do you want to play a game of Blackjack? Type 'y' or 'n': ").lower() == "y":
     clear()
     blackjack()
     
