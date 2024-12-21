@@ -1,6 +1,6 @@
 import datetime
 import random
-import artbanking
+import artguessnumber
 import sys
 import time
 
@@ -78,7 +78,7 @@ def guess_number(attempts, number):
 def main(): 
     # clock()
     number = getRandomNum()
-    print(artbanking.logo)
+    print(artguessnumber.logo)
     print("Welcome to the Number Guessing Game!")
     print("I'm thinking of a number between 1 and 100")
     # global attempts
