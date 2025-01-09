@@ -1,3 +1,4 @@
+from os import system, name
 from gamedata import data 
 from higherlowerlogo import higherlowerlogo as hllogo
 from vslogo import vslogo 
@@ -5,6 +6,15 @@ import random
 
 """ From the list of unicodes, replace “+” with “000”. https://home.unicode.org/ www.unicode.org/
  example – “U+1F600” will become “U0001F600” and prefix the unicode with “\” and print it. """
+
+# Clear function
+def clear():
+    # for windows
+    if name == 'nt':
+        _ = system('cls')
+    # for mac and linux(here, os.name is 'posix')
+    else:
+        _ = system('clear')
 
 # Display Logo
 def printlogo():
@@ -63,6 +73,7 @@ def main():
         compareT(random_topic1, random_topic2)
         ans = askq()
         should_continue, score = check(random_topic1, random_topic2, ans, score)
+        clear()
 
 if __name__ == '__main__':
     main()
