@@ -12,6 +12,10 @@ Milk = 250
 Coffee = 380
 Money = 12.50
 
+# COFFEE 16g .55oz = 8oz / 3g = .10oz
+# WATER 325 ml = 8oz / 1oz = 29ml
+# MILK  325 ml = 8oz / 1oz = 29ml
+
 # Clear function
 def clear():
     # for windows
@@ -34,10 +38,10 @@ def answer(ans):
     elif ans == "espresso":
         pass
     elif (ans == "latte"):
-        # 16g .55oz COFFEE
-        # 325 ml = 8oz/ 1oz = 29ml
-        #  2oz/water=60ml 4oz/milk=120 2oz/coffee
-        # Drip 200ml water            
+        # COFFEE 16g .55oz Water 8oz / 3g = .10oz  55/16 = 3.43
+        # WATER 325 ml = 8oz / 1oz = 29ml
+        # MILK  325 ml = 8oz / 1oz = 29ml
+                  
         if  Water > 400 & Milk > 200 & Coffee > .50
         pass
     elif (ans == "cappuccino"):
