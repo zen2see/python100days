@@ -30,25 +30,37 @@ def answer(ans):
         # Exit with status code 0 (success)
         sys.exit(0) 
     elif (ans == "report"):
-        print(f"\nWater: {Water}\nMilk: {Milk}\nCoffee: {Coffee}\n")
+        print(f"\nWater: {Water}\nMilk: {Milk}\nCoffee: {Coffee}\nMoney: {Money}")
     elif ans == "espresso":
         pass
     elif (ans == "latte"):
+        # 16g .55oz COFFEE
+        # 325 ml = 8oz/ 1oz = 29ml
+        #  2oz/water=60ml 4oz/milk=120 2oz/coffee
+        # Drip 200ml water            
+        if  Water > 400 & Milk > 200 & Coffee > .50
         pass
     elif (ans == "cappuccino"):
         pass
+    
+def report():
+    print(f"\nWater: {Water}\
+            \nMilk: {Milk}\
+            \nCoffee: {Coffee}\
+            \n)Money: $ {Money}\
+          ")
 
-def main():
+def main():   
     ans = "on"
     ask = "What would you like "
     while ans != "off":
         ans = prompt(ask)
         answer(ans)
         time.sleep(3)
-        print("Done!")
+        print("\nDone!")
         time.sleep(2)
         clear()
-        ask = "Would you like another "
+        ask = "\nWould you like another "
     
 if __name__ == '__main__':
     main()
