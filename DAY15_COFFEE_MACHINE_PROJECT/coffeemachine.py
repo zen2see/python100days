@@ -13,6 +13,10 @@ print(sys.executable)
  # 7 grams = .24oz
  # 1 gram - .03oz
  # 29.6 ml = 1 oz
+ # FOR THE PROJECT - 
+ # ESPRESSPO 50ml Water 18g Coffee
+ # LATTE 200ml Water 24g Coffee 150ml Milk
+ # CAPPUCCINO 240ml Water 24g Coffee 100ml Milk
 
 # Clear function
 def clear():
@@ -34,6 +38,19 @@ def update(w, m, c, mo, Water, Milk, Coffee, Money):
 def prompt(ask):      
     ans = input(f"{ask} (espresso/latte/cappuccino/report)? ").lower()
     return ans
+    
+def checkamount(cost, cash):
+    change = cash - cost
+    if change > 0:
+        print(f"Here is your ${change:.2f} in change. Thank you")
+        return change
+    elif change == 0:
+        print("Thank you")
+        return change
+    elif change < 0:
+        change = cost + change
+        print("Sorry tha't not enough money. Money refunded")
+        return change
 
 def noingredients(ingredient):
     if ingredient == "Water":
@@ -59,18 +76,20 @@ def answer(ans, Water, Milk, Coffee, Money):
         Single shot: 7-9 grams of finely ground coffee
         Double shot: 14–18 grams of coffee
         7 grams = .24oz
+        ESPRESSO ORIGINALLY USED 60 WATER and 30 COFFEE
         """
         # ESPRESSO Heaped teaspoon and Hot Water (one fluid ounce and a double is two)
         # 70 ml coffee.  
-        if Water >= 60 and Coffee >= 30:
-            Water, Milk, Coffee, Money = update(60, 0, 30, 1.50, Water, Milk, Coffee, Money)
+        if Water >= 50 and Coffee >= 18: # Water >= 60 and Coffee >= 30:
+
+            Water, Milk, Coffee, Money = update(50, 0, 18, 1.50, Water, Milk, Coffee, Money)
             print("Espresso...")
         else:
-            if Water < 60:
+            if Water < 50:
                 noingredients("Water")
-            if Coffee < 30:
+            if Coffee < 18:
                 noingredients("Coffee")    
-            update(-60, 0, -30, -1.50, Water, Milk, Coffee, Money )
+            update(-50, 0, -18, -1.50, Water, Milk, Coffee, Money )
             print("Espresso...")
     elif (ans == "latte"):
         # LATTE one shot of espresso 8-10oz of steamed milk 1/2 inch of milk foam
@@ -97,7 +116,7 @@ def answer(ans, Water, Milk, Coffee, Money):
             if Milk < 100: 
                 noingredients("Milk")
     return Water, Milk, Coffee, Money
-    
+
 def report(Water, Milk, Coffee, Money):
     print(f"\nWater: {Water}\
             \nMilk: {Milk}\
