@@ -62,46 +62,42 @@ def answer(ans, Water, Milk, Coffee, Money):
         """
         # ESPRESSO Heaped teaspoon and Hot Water (one fluid ounce and a double is two)
         # 70 ml coffee.  
-        if Water >= 60:
-            Water -= 60
-        else:
-            noingredients(Water)
-        if Coffee >= 30:    
-            Coffee -= 30
+        if Water >= 60 and Coffee >= 30:
+            Water, Milk, Coffee, Money = update(60, 0, 30, 1.50, Water, Milk, Coffee, Money)
             print("Espresso...")
         else:
-            noingredients(Coffee)
+            if Water < 60:
+                noingredients("Water")
+            if Coffee < 30:
+                noingredients("Coffee")    
+            update(-60, 0, -30, -1.50, Water, Milk, Coffee, Money )
+            print("Espresso...")
     elif (ans == "latte"):
         # LATTE one shot of espresso 8-10oz of steamed milk 1/2 inch of milk foam
         # 70ml coffee, 8oz of milk,  1/2 inch of milk foam   
-        if Water >= 60:
-            Water -= 60
-        else:
-            noingredients(Water)
-        if Coffee >= 30:
-            Coffee -= 30
-        else:
-            noingredients(Coffee)
-        if Milk >= 200:
-            Milk -= 200
-            return print("Latte...")
+        if Water >= 60 and Coffee >= 30 and Milk >= 200:
+            Water, Milk, Coffee, Money = update(60, 200, 30, 2.50, Water, Milk, Coffee, Money)
+            print("Latte...") 
         else: 
-           noingredients(Milk)
+            if Water < 60: 
+                noingredients("Water") 
+            if Coffee < 30: 
+                noingredients("Coffee") 
+            if Milk < 200: 
+                noingredients("Milk")    
     elif (ans == "cappuccino"):
-        if Water >= 60:
-            Water -= 60
-        else:
-            noingredients(Water)
-        if Coffee >= 30:
-            Coffee -= 30
-        else:
-            noingredients(Coffee)
-        if Milk >= 100:
-            Milk -= 100
-            return print("Cappuccino...")
-        else:
-            noingredients(Milk)
-            
+        if Water >= 60 and Coffee >= 30 and Milk >= 100: 
+            Water, Milk, Coffee, Money = update(60, 100, 30, 3.00, Water, Milk, Coffee, Money) 
+            print("Cappuccino...") 
+        else: 
+            if Water < 60: 
+                noingredients("Water") 
+            if Coffee < 30: 
+                noingredients("Coffee") 
+            if Milk < 100: 
+                noingredients("Milk")
+    return Water, Milk, Coffee, Money
+    
 def report(Water, Milk, Coffee, Money):
     print(f"\nWater: {Water}\
             \nMilk: {Milk}\
@@ -118,10 +114,8 @@ def main():
     ask = "What would you like"
     while ans != "off":
         ans = prompt(ask)
-        #Water, Milk, Coffee, Money = answer(ans, Water, Milk, Coffee, Money) 
-        answer(ans, Water, Milk, Coffee, Money)
-        time.sleep(3)
-        #answer(ans)
+        Water, Milk, Coffee, Money = answer(ans, Water, Milk, Coffee, Money) 
+        #answer(ans, Water, Milk, Coffee, Money)
         time.sleep(3)
         print("\nDone!\n")
         time.sleep(2)
