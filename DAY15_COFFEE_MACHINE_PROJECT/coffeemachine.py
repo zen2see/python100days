@@ -14,9 +14,9 @@ print(sys.executable)
  # 1 gram - .03oz
  # 29.6 ml = 1 oz
  # FOR THE PROJECT - 
- # ESPRESSO 50ml Water 18g Coffee
- # LATTE 200ml Water 24g Coffee 150ml Milk
- # CAPPUCCINO 240ml Water 24g Coffee 100ml Milk
+ # ESPRESSO 50ml Water 18g Coffee $1.50
+ # LATTE 200ml Water 24g Coffee 150ml Milk $2.50
+ # CAPPUCCINO 250ml Water 24g Coffee 100ml Milk $3.00
 
 # Clear function
 def clear():
@@ -40,18 +40,18 @@ def prompt(ask):
     ans = input(f"{ask} (espresso/latte/cappuccino/report)? ").lower()
     return ans
 
-def promptamount():
-    amt = input("Please insert coins - $1.50: ")
+def promptamount(price):
+    amt = input(f"Please insert coins - {price:.2f}: ")
     Amount = float(amt)
     return Amount
 
 def checkamount(cost, cash):
     change = cash - cost
     if change > 0:
-        print(f"\nHere is your ${change:.2f} in change. Thank you")
+        print(f"\nHere is ${change:.2f} in change. Thank you")
         return change
     elif change == 0:
-        print("\nThank you")
+        print("\nThank you\n")
         return change
     elif change < 0:
         change = cost + change
@@ -62,11 +62,13 @@ def checkamount(cost, cash):
 
 def noingredients(ingredient):
     if ingredient == "Water":
-        print("Sorry there is not enough Water")
+        print("Sorry there is not enough Water.")
+        sys.exit("Exiting...")
     elif ingredient == "Coffee":
-        print("Sorry there is not enough Coffee")
+        print("Sorry there is not enough Coffee.")
+        sys.exit("Exiting...")
     elif ingredient == "Milk":
-        print("Sorry there is not enough Milk")
+        print("Sorry there is not enough Milk.")
 
 def answer(ans, Water, Milk, Coffee, Money):
     if (ans == "off"):
@@ -91,7 +93,7 @@ def answer(ans, Water, Milk, Coffee, Money):
         # ESPRESSO Heaped teaspoon and Hot Water (one fluid ounce and a double is two)
         # 70 ml coffee.  
         if Water >= 50 and Coffee >= 18: # Water >= 60 and Coffee >= 30:
-            Amount = promptamount()
+            Amount = promptamount(1.50)
             Water, Milk, Coffee, Money, Amount = update(50, 0, 18, 1.50, 0, Water, Milk, Coffee, Money, Amount )
             checkamount(1.50, Amount)
             print("Espresso...")
@@ -104,8 +106,9 @@ def answer(ans, Water, Milk, Coffee, Money):
         # LATTE one shot of espresso 8-10oz of steamed milk 1/2 inch of milk foam
         # 70ml coffee, 8oz of milk,  1/2 inch of milk foam   
         if Water >= 200 and Coffee >= 24 and Milk >= 150:
-            #if checkamount
-            Water, Milk, Coffee, Money = update(200, 150, 24, 2.50, Water, Milk, Coffee, Money, Amount)
+            Amount = promptamount(2.00)
+            Water, Milk, Coffee, Money, Amount = update(200, 150, 24, 2.50, 0, Water, Milk, Coffee, Money, Amount)
+            checkamount(2.00, Amount)
             print("Latte...") 
         else: 
             if Water < 60: 
@@ -115,9 +118,11 @@ def answer(ans, Water, Milk, Coffee, Money):
             if Milk < 200: 
                 noingredients("Milk")    
     elif (ans == "cappuccino"):
+        # CAPPUCCINO one shot of espresso 8-10oz of steamed milk 1/2 inch of milk foam
+        # 70ml coffee, 8oz of milk,  1/2 inch of milk foam 
         if Water >= 250 and Coffee >= 24 and Milk >= 100: 
-            #if checkamount
-            Water, Milk, Coffee, Money = update(250, 100, 24, 3.00, Water, Milk, Coffee, Money, Amount) 
+            Amount = promptamount(3.00)
+            Water, Milk, Coffee, Money, Amount = update(250, 100, 24, 3.00, 0, Water, Milk, Coffee, Money, Amount) 
             print("Cappuccino...") 
         else: 
             if Water < 60: 
@@ -129,18 +134,18 @@ def answer(ans, Water, Milk, Coffee, Money):
     return Water, Milk, Coffee, Money
 
 def report(Water, Milk, Coffee, Money):
-    print(f"\nWater: {Water}\
-            \nMilk: {Milk}\
-            \nCoffee: {Coffee}\
+    print(f"\nWater: {Water}ml\
+            \nMilk: {Milk}ml\
+            \nCoffee: {Coffee}g\
             \nMoney: $ {Money}\
         ")
 
 def main():
-    Amount = 0.0
     Water = 500
     Milk = 250
     Coffee = 380
-    Money = 12.50  
+    Money = 12.50
+    Amount = 0.0  
     ans = "on"
     ask = "What would you like"
     while ans != "off":
