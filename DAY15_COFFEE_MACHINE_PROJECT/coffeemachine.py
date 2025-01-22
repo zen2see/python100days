@@ -40,8 +40,8 @@ def prompt(ask):
     ans = input(f"{ask} (espresso/latte/cappuccino/report)? ").lower()
     return ans
 
-def promptamount(price):
-    amt = input(f"Please insert coins - {price:.2f}: ")
+def promptamount(price, drink_name):
+    amt = input(f"One {drink_name}, please insert coins: ${price:.2f}: ")
     Amount = float(amt)
     return Amount
 
@@ -60,22 +60,30 @@ def checkamount(cost, cash):
         print("Money refunded!")
         sys.exit("Exiting...")
 
-def noingredients(ingredient):
-    if ingredient == "Water":
-        print("Sorry there is not enough Water.")
-        sys.exit("Exiting...")
-    elif ingredient == "Coffee":
-        print("Sorry there is not enough Coffee.")
-        sys.exit("Exiting...")
-    elif ingredient == "Milk":
-        print("Sorry there is not enough Milk.")
+def checkingredients(order, resources):
+    for item in order:
+        if order[item] >= resources[item]:
+            print(f"Sorry theere is not enough {item}.")
+            return False
+    return True
 
-def answer(ans, Water, Milk, Coffee, Money):
+# def noingredients(ingredient):
+#     if ingredient == "Water":
+#         print("Sorry there is not enough Water.")
+#         sys.exit("Exiting...")
+#     elif ingredient == "Coffee":
+#         print("Sorry there is not enough Coffee.")
+#         sys.exit("Exiting...")
+#     elif ingredient == "Milk":
+#         print("Sorry there is not enough Milk.")
+
+def answer(ans, Water, Milk, Coffee, Money, resources):
     if (ans == "off"):
         # Exit with status code 0 (success)
         sys.exit(0) 
     elif (ans == "report"):
-        report(Water, Milk, Coffee, Money)
+        # report(Water, Milk, Coffee, Money)
+        report(resources)
     elif ans == "espresso":
         """
         The ratio of coffee to water for espresso can vary depending on the type of espresso: 
@@ -133,30 +141,84 @@ def answer(ans, Water, Milk, Coffee, Money):
                 noingredients("Milk")
     return Water, Milk, Coffee, Money
 
-def report(Water, Milk, Coffee, Money):
-    print(f"\nWater: {Water}ml\
-            \nMilk: {Milk}ml\
-            \nCoffee: {Coffee}g\
-            \nMoney: $ {Money}\
-        ")
+# def report(Water, Milk, Coffee, Money):
+#     print(f"\nWater: {Water}ml\
+#             \nMilk: {Milk}ml\
+#             \nCoffee: {Coffee}g\
+#             \nMoney: $ {Money}\
+#         ")
+
+def report(resources):
+    print(f"\nWater: {resources['Water']}ml\
+             \nMilk: {resources['Milk']}ml\
+             \nCoffee: {resources['Coffee']}g\
+             \nMoney: ${resources['Money']}\
+         ")
+def checkorder(order, resources):
+    for item in order:
+        if order[item] >= resources[item]:
+            print(f"Sorry there is not enough {item}.")
+            return False
+    return True
+
+def checkchange():
+    amount = int(input("How many quarters?: ")) * 0.25
+    amount = int(input("How many dimes?: ")) * 0.1
+    amount = int(input("How many nickles?: ")) * 0.05
+    amount = int(input("How many pennies?: ")) * 0.01
+
 
 def main():
-    Water = 500
-    Milk = 250
-    Coffee = 380
-    Money = 12.50
-    Amount = 0.0  
+    # Water = 500
+    # Milk = 250
+    # Coffee = 380
+    # Money = 12.50
+    MENU = {
+        "espresso": {
+            "ingredients": {
+                "Water": 50,
+                "Coffee": 18,
+            },
+            "cost": 1.5,
+        },
+        "latte": {
+            "ingredients": {
+                "Water": 200,
+                "Milk": 150, 
+                "Coffee": 24,
+            },
+            "cost": 2.5,  
+        },
+        "cappuccino": {
+            "ingredients": {
+                "Water": 250,
+                "Milk": 100,
+                "Coffee": 24,
+            },
+            "cost": 2.5,
+        },
+    }
+    profit = 0
+    resources = { 
+        "Water": 500,
+        "Milk": 250,
+        "Coffee": 380,
+        "Money": 0
+    }
     ans = "on"
     ask = "What would you like"
     while ans != "off":
         ans = prompt(ask)
-        Water, Milk, Coffee, Money = answer(ans, Water, Milk, Coffee, Money)
-        #answer(ans, Water, Milk, Coffee, Money)
+        # Water, Milk, Coffee, Money = answer(ans, Water, Milk, Coffee, Money, resources)
+        drink = MENU[ans]
+        if checkorder(drink["ingredients"], resources):
+            promptamount(drink["cost"], ans)
         time.sleep(3)
         print("\nDone!\n")
+        print(MENU[0])
         time.sleep(2)
-        clear()
-        ask = "\nWould you like another "
+        #clear()
+        ask = "\nWould you like an "
     
 if __name__ == '__main__':
     main()
