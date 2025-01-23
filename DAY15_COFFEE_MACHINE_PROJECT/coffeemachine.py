@@ -40,10 +40,13 @@ def prompt(ask):
     ans = input(f"{ask} (espresso/latte/cappuccino/report)? ").lower()
     return ans
 
-def promptamount(price, drink_name):
-    amt = input(f"One {drink_name}, please insert coins: ${price:.2f}: ")
-    Amount = float(amt)
-    return Amount
+# def promptamount(price, drink_name):
+#     amt = input(f"One {drink_name}, please insert coins: ${price:.2f}: ")
+#     Amount = float(amt)
+#     return Amount
+
+def promptamount(drink_name, price):
+    print(f"One {drink_name}! Cost is ${price:.2f}. Please insert coins: ")
 
 def checkamount(cost, cash):
     change = cash - cost
@@ -141,25 +144,12 @@ def answer(ans, Water, Milk, Coffee, Money, resources):
                 noingredients("Milk")
     return Water, Milk, Coffee, Money
 
-# def report(Water, Milk, Coffee, Money):
-#     print(f"\nWater: {Water}ml\
-#             \nMilk: {Milk}ml\
-#             \nCoffee: {Coffee}g\
-#             \nMoney: $ {Money}\
-#         ")
-
 def report(resources):
     print(f"\nWater: {resources['Water']}ml\
              \nMilk: {resources['Milk']}ml\
              \nCoffee: {resources['Coffee']}g\
              \nMoney: ${resources['Money']}\
          ")
-# def checkorder(order, resources):
-#     for item in order:
-#         if order[item] >= resources[item]:
-#             print(f"Sorry there is not enough {item}.")
-#             return False
-#     return True
 
 def checkorder(MENU, order, resources):
     for item in MENU[order]["ingredients"]:
@@ -168,12 +158,12 @@ def checkorder(MENU, order, resources):
             return False
     return True
 
-def checkchange():
-    amount = int(input("How many quarters?: ")) * 0.25
-    amount = int(input("How many dimes?: ")) * 0.1
-    amount = int(input("How many nickles?: ")) * 0.05
-    amount = int(input("How many pennies?: ")) * 0.01
-
+def checkpayment():
+    amt = int(input("How many quarters?: ")) * 0.25
+    amt += int(input("How many dimes?  : ")) * 0.1
+    amt += int(input("How many nickles?: ")) * 0.05
+    amt += int(input("How many pennies?: ")) * 0.01
+    return amt
 
 def main():
     # Water = 500
@@ -221,18 +211,25 @@ def main():
         # if checkorder(MENU, drink["ingredients"], resources):
         #     promptamount(drink["cost"], ans)
         if user_choice == "off":
-            return 
-        if checkorder(MENU, user_choice, resources):
-            print(user_choice)
+            return
+        elif user_choice == "report":
+            report(resources) 
         else:
-            print("Order cannot be fulfilled due to insufficient resources.")
-
+        # print(MENU[user_choice], MENU[user_choice]["ingredients"])    
+            if checkorder(MENU, user_choice, resources):
+                # print(f"\n{user_choice}...\n") 
+                clear()
+                promptamount(user_choice, MENU[user_choice]['cost'])
+                # print(MENU[user_choice]["cost"])
+                payment = checkpayment()
+                checkamount(MENU[user_choice]['cost'], payment)
+            else:
+                print("Order cannot be fulfilled due to insufficient resources.")
         time.sleep(3)
-        print("\nDone!\n")
-        # print(MENU[0])
+        print("Done!\n")
         time.sleep(2)
         #clear()
-        ask = "\nWould you like an "
+        ask = "Something else?"
     
 if __name__ == '__main__':
     main()
