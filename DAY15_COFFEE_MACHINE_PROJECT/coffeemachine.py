@@ -154,9 +154,16 @@ def report(resources):
              \nCoffee: {resources['Coffee']}g\
              \nMoney: ${resources['Money']}\
          ")
-def checkorder(order, resources):
-    for item in order:
-        if order[item] >= resources[item]:
+# def checkorder(order, resources):
+#     for item in order:
+#         if order[item] >= resources[item]:
+#             print(f"Sorry there is not enough {item}.")
+#             return False
+#     return True
+
+def checkorder(MENU, order, resources):
+    for item in MENU[order]["ingredients"]:
+        if MENU[order]["ingredients"][item] > resources[item]:
             print(f"Sorry there is not enough {item}.")
             return False
     return True
@@ -208,14 +215,21 @@ def main():
     ans = "on"
     ask = "What would you like"
     while ans != "off":
-        ans = prompt(ask)
+        user_choice = prompt(ask)
         # Water, Milk, Coffee, Money = answer(ans, Water, Milk, Coffee, Money, resources)
-        drink = MENU[ans]
-        if checkorder(drink["ingredients"], resources):
-            promptamount(drink["cost"], ans)
+        # drink = MENU[ans]
+        # if checkorder(MENU, drink["ingredients"], resources):
+        #     promptamount(drink["cost"], ans)
+        if user_choice == "off":
+            return 
+        if checkorder(MENU, user_choice, resources):
+            print(user_choice)
+        else:
+            print("Order cannot be fulfilled due to insufficient resources.")
+
         time.sleep(3)
         print("\nDone!\n")
-        print(MENU[0])
+        # print(MENU[0])
         time.sleep(2)
         #clear()
         ask = "\nWould you like an "
