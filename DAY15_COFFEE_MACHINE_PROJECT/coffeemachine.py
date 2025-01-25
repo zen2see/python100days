@@ -33,6 +33,7 @@ print(sys.executable)
 
 # Clear function
 def clear():
+    """ CLear the screen. """
     # for windows
     if name == 'nt':
         _ = system('cls')
@@ -40,31 +41,21 @@ def clear():
     else:
         _ = system('clear')
 
-def update(w, m, c, mo, amt, Water, Milk, Coffee, Money, Amount):
-    Water -= w
-    Milk -= m
-    Coffee -= c
-    Amount += amt
-    Money += mo - amt
-    return Water, Milk, Coffee, Money, Amount
-
-def updateresources(order, menu, resources):
-    for item in menu[order]["ingredients"]:
-        resources[item] -= menu[order]["ingredients"][item]
-    return resources
 # Prompt 
-def prompt(ask):      
+def prompt(ask): 
+    """ Prompt for drink or amount. """     
     ans = input(f"{ask} (espresso/latte/cappuccino/report)? ").lower()
     return ans
 
-def checkingredients(order, resources):
-    for item in order:
-        if order[item] >= resources[item]:
-            print(f"Sorry theere is not enough {item}.")
-            return False
-    return True
+# def checkingredients(order, resources):
+#     for item in order:
+#         if order[item] >= resources[item]:
+#             print(f"Sorry theere is not enough {item}.")
+#             return False
+#     return True
 
 def checkorder(MENU, order, resources):
+    """ Check the order against resources. """
     for item in MENU[order]["ingredients"]:
         if MENU[order]["ingredients"][item] > resources[item]:
             print(f"Sorry there is not enough {item}.")
@@ -72,6 +63,7 @@ def checkorder(MENU, order, resources):
     return True
 
 def checkpayment():
+    """ User adds coins to process payment. """
     amt = int(input("How many quarters?: ")) * 0.25
     amt += int(input("How many dimes?  : ")) * 0.1
     amt += int(input("How many nickles?: ")) * 0.05
@@ -79,15 +71,17 @@ def checkpayment():
     return amt
 
 def promptamount(drink_name, price):
+    """ Prompt for drink. """
     print(f"One {drink_name}! Cost is ${price:.2f}. Please insert coins: ")
 
 def checkamount(cost, cash):
+    """ Calculates the exact change, refunds overages. """
     change = cash - cost
     if change > 0:
         print(f"\nHere is ${change:.2f} in change. Thank you")
         return change
     elif change == 0:
-        print("\nThank you\n")
+        print("\nThank you")
         return change
     elif change < 0:
         change = cost + change
@@ -97,75 +91,21 @@ def checkamount(cost, cash):
         sys.exit("Exiting...")
 
 def report(resources):
+    """ Returns current resources. """
     print(f"\nWater: {resources['Water']}ml\
              \nMilk: {resources['Milk']}ml\
              \nCoffee: {resources['Coffee']}g\
              \nMoney: ${resources['Money']}\
          ")
 
-# def noingredients(ingredient):
-#     if ingredient == "Water":
-#         print("Sorry there is not enough Water.")
-#         sys.exit("Exiting...")
-#     elif ingredient == "Coffee":
-#         print("Sorry there is not enough Coffee.")
-#         sys.exit("Exiting...")
-#     elif ingredient == "Milk":
-#         print("Sorry there is not enough Milk.")
-
-def answer(ans, Water, Milk, Coffee, Money, resources):
-    if (ans == "off"):
-        # Exit with status code 0 (success)
-        sys.exit(0) 
-    elif (ans == "report"):
-        # report(Water, Milk, Coffee, Money)
-        report(resources)
-    elif ans == "espresso":
-     
-        # ESPRESSO Heaped teaspoon and Hot Water (one fluid ounce and a double is two)
-        # 70 ml coffee.  
-        if Water >= 50 and Coffee >= 18: # Water >= 60 and Coffee >= 30:
-            Amount = promptamount(1.50)
-            Water, Milk, Coffee, Money, Amount = update(50, 0, 18, 1.50, 0, Water, Milk, Coffee, Money, Amount )
-            checkamount(1.50, Amount)
-            print("Espresso...")
-        else:
-            if Water < 50:
-                noingredients("Water")
-            if Coffee < 18:
-                noingredients("Coffee")    
-    elif (ans == "latte"):
-        # LATTE one shot of espresso 8-10oz of steamed milk 1/2 inch of milk foam
-        # 70ml coffee, 8oz of milk,  1/2 inch of milk foam   
-        if Water >= 200 and Coffee >= 24 and Milk >= 150:
-            Amount = promptamount(2.00)
-            Water, Milk, Coffee, Money, Amount = update(200, 150, 24, 2.50, 0, Water, Milk, Coffee, Money, Amount)
-            checkamount(2.00, Amount)
-            print("Latte...") 
-        else: 
-            if Water < 60: 
-                noingredients("Water") 
-            if Coffee < 30: 
-                noingredients("Coffee") 
-            if Milk < 200: 
-                noingredients("Milk")    
-    elif (ans == "cappuccino"):
-        # CAPPUCCINO one shot of espresso 8-10oz of steamed milk 1/2 inch of milk foam
-        # 70ml coffee, 8oz of milk,  1/2 inch of milk foam 
-        if Water >= 250 and Coffee >= 24 and Milk >= 100: 
-            Amount = promptamount(3.00)
-            Water, Milk, Coffee, Money, Amount = update(250, 100, 24, 3.00, 0, Water, Milk, Coffee, Money, Amount) 
-            print("Cappuccino...") 
-        else: 
-            if Water < 60: 
-                noingredients("Water") 
-            if Coffee < 30: 
-                noingredients("Coffee") 
-            if Milk < 100: 
-                noingredients("Milk")
-    return Water, Milk, Coffee, Money
+def updateresources(order, menu, resources):
+    """ Updates resources based on order. """
+    for item in menu[order]["ingredients"]:
+        resources[item] -= menu[order]["ingredients"][item]
+    return resources
 
 def main():
+    """ The main function. """
     MENU = {
         "espresso": {
             "ingredients": {
@@ -193,7 +133,7 @@ def main():
     }
     resources = { 
         "Water": 500,
-        "Milk": 250,
+        "Milk": 500,
         "Coffee": 380,
         "Money": 0
     }
@@ -209,10 +149,8 @@ def main():
             report(resources) 
         else:
             if checkorder(MENU, user_choice, resources):
-                # print(f"\n{user_choice}...\n") 
                 clear()
                 promptamount(user_choice, MENU[user_choice]['cost'])
-                # print(MENU[user_choice]["cost"])
                 payment = checkpayment()
                 ca = checkamount(MENU[user_choice]['cost'], payment)
                 if ca >= 0:
@@ -220,10 +158,11 @@ def main():
                     resources["Money"] += MENU[user_choice]['cost']
             else:
                 print("Order cannot be fulfilled due to insufficient resources.")
+                time.sleep(2)
+                sys.exit("Exiting...")
         time.sleep(3)
         print("\nDone!\n")
         time.sleep(2)
-        #clear()
         ask = "Something else?"
     
 if __name__ == '__main__':
