@@ -14,9 +14,22 @@ print(sys.executable)
  # 1 gram - .03oz
  # 29.6 ml = 1 oz
  # FOR THE PROJECT - 
- # ESPRESSO 50ml Water 18g Coffee $1.50
- # LATTE 200ml Water 24g Coffee 150ml Milk $2.50
- # CAPPUCCINO 250ml Water 24g Coffee 100ml Milk $3.00
+ # ESPRESSO 50ml Water 18g Coffee $1.50 # ESPRESSO Heaped teaspoon and Hot Water (one fluid ounce and a double is two)
+ # LATTE 200ml Water 24g Coffee 150ml Milk $2.50 # LATTE one shot of espresso 8-10oz of steamed milk 1/2 inch of milk foam
+ # CAPPUCCINO 250ml Water 24g Coffee 100ml Milk $3.00 # CAPPUCCINO one shot of espresso 8-10oz of steamed milk 1/2 inch of milk foam
+"""
+        The ratio of coffee to water for espresso can vary depending on the type of espresso: 
+        Ristretto: A 1:1 to 1:2 ratio
+        Normale: A 1:2 to 1:3 ratio
+        Lungo: A 1:3 to 1:4 ratio
+        The amount of coffee needed for an espresso shot also depends on the type of shot: 
+        Single shot: 7-9 grams of finely ground coffee
+        Double shot: 14–18 grams of coffee
+        7 grams = .24oz
+        ESPRESSO ORIGINALLY USED 60 WATER and 30 COFFEE - $1.50
+        LATTE ORIGINALLY USED 60 WATER 30 COFFEE and 200 MILK - $2.50
+        CAPPUCCINO ORIGINALLY USED 60 WATER and 30 COFFEE and 100 MILK - $3.00
+"""
 
 # Clear function
 def clear():
@@ -35,15 +48,35 @@ def update(w, m, c, mo, amt, Water, Milk, Coffee, Money, Amount):
     Money += mo - amt
     return Water, Milk, Coffee, Money, Amount
 
+def updateresources(order, menu, resources):
+    for item in menu[order]["ingredients"]:
+        resources[item] -= menu[order]["ingredients"][item]
+    return resources
 # Prompt 
 def prompt(ask):      
     ans = input(f"{ask} (espresso/latte/cappuccino/report)? ").lower()
     return ans
 
-# def promptamount(price, drink_name):
-#     amt = input(f"One {drink_name}, please insert coins: ${price:.2f}: ")
-#     Amount = float(amt)
-#     return Amount
+def checkingredients(order, resources):
+    for item in order:
+        if order[item] >= resources[item]:
+            print(f"Sorry theere is not enough {item}.")
+            return False
+    return True
+
+def checkorder(MENU, order, resources):
+    for item in MENU[order]["ingredients"]:
+        if MENU[order]["ingredients"][item] > resources[item]:
+            print(f"Sorry there is not enough {item}.")
+            return False
+    return True
+
+def checkpayment():
+    amt = int(input("How many quarters?: ")) * 0.25
+    amt += int(input("How many dimes?  : ")) * 0.1
+    amt += int(input("How many nickles?: ")) * 0.05
+    amt += int(input("How many pennies?: ")) * 0.01
+    return amt
 
 def promptamount(drink_name, price):
     print(f"One {drink_name}! Cost is ${price:.2f}. Please insert coins: ")
@@ -63,12 +96,12 @@ def checkamount(cost, cash):
         print("Money refunded!")
         sys.exit("Exiting...")
 
-def checkingredients(order, resources):
-    for item in order:
-        if order[item] >= resources[item]:
-            print(f"Sorry theere is not enough {item}.")
-            return False
-    return True
+def report(resources):
+    print(f"\nWater: {resources['Water']}ml\
+             \nMilk: {resources['Milk']}ml\
+             \nCoffee: {resources['Coffee']}g\
+             \nMoney: ${resources['Money']}\
+         ")
 
 # def noingredients(ingredient):
 #     if ingredient == "Water":
@@ -88,19 +121,7 @@ def answer(ans, Water, Milk, Coffee, Money, resources):
         # report(Water, Milk, Coffee, Money)
         report(resources)
     elif ans == "espresso":
-        """
-        The ratio of coffee to water for espresso can vary depending on the type of espresso: 
-        Ristretto: A 1:1 to 1:2 ratio
-        Normale: A 1:2 to 1:3 ratio
-        Lungo: A 1:3 to 1:4 ratio
-        The amount of coffee needed for an espresso shot also depends on the type of shot: 
-        Single shot: 7-9 grams of finely ground coffee
-        Double shot: 14–18 grams of coffee
-        7 grams = .24oz
-        ESPRESSO ORIGINALLY USED 60 WATER and 30 COFFEE - $1.50
-        LATTE ORIGINALLY USED 60 WATER 30 COFFEE and 200 MILK - $2.50
-        CAPPUCCINO ORIGINALLY USED 60 WATER and 30 COFFEE and 100 MILK - $3.00
-        """
+     
         # ESPRESSO Heaped teaspoon and Hot Water (one fluid ounce and a double is two)
         # 70 ml coffee.  
         if Water >= 50 and Coffee >= 18: # Water >= 60 and Coffee >= 30:
@@ -144,32 +165,7 @@ def answer(ans, Water, Milk, Coffee, Money, resources):
                 noingredients("Milk")
     return Water, Milk, Coffee, Money
 
-def report(resources):
-    print(f"\nWater: {resources['Water']}ml\
-             \nMilk: {resources['Milk']}ml\
-             \nCoffee: {resources['Coffee']}g\
-             \nMoney: ${resources['Money']}\
-         ")
-
-def checkorder(MENU, order, resources):
-    for item in MENU[order]["ingredients"]:
-        if MENU[order]["ingredients"][item] > resources[item]:
-            print(f"Sorry there is not enough {item}.")
-            return False
-    return True
-
-def checkpayment():
-    amt = int(input("How many quarters?: ")) * 0.25
-    amt += int(input("How many dimes?  : ")) * 0.1
-    amt += int(input("How many nickles?: ")) * 0.05
-    amt += int(input("How many pennies?: ")) * 0.01
-    return amt
-
 def main():
-    # Water = 500
-    # Milk = 250
-    # Coffee = 380
-    # Money = 12.50
     MENU = {
         "espresso": {
             "ingredients": {
@@ -195,38 +191,37 @@ def main():
             "cost": 2.5,
         },
     }
-    profit = 0
     resources = { 
         "Water": 500,
         "Milk": 250,
         "Coffee": 380,
         "Money": 0
     }
+
+    profit = 0
     ans = "on"
     ask = "What would you like"
     while ans != "off":
         user_choice = prompt(ask)
-        # Water, Milk, Coffee, Money = answer(ans, Water, Milk, Coffee, Money, resources)
-        # drink = MENU[ans]
-        # if checkorder(MENU, drink["ingredients"], resources):
-        #     promptamount(drink["cost"], ans)
         if user_choice == "off":
             return
         elif user_choice == "report":
             report(resources) 
         else:
-        # print(MENU[user_choice], MENU[user_choice]["ingredients"])    
             if checkorder(MENU, user_choice, resources):
                 # print(f"\n{user_choice}...\n") 
                 clear()
                 promptamount(user_choice, MENU[user_choice]['cost'])
                 # print(MENU[user_choice]["cost"])
                 payment = checkpayment()
-                checkamount(MENU[user_choice]['cost'], payment)
+                ca = checkamount(MENU[user_choice]['cost'], payment)
+                if ca >= 0:
+                    resources = updateresources(user_choice, MENU,  resources)
+                    resources["Money"] += MENU[user_choice]['cost']
             else:
                 print("Order cannot be fulfilled due to insufficient resources.")
         time.sleep(3)
-        print("Done!\n")
+        print("\nDone!\n")
         time.sleep(2)
         #clear()
         ask = "Something else?"
