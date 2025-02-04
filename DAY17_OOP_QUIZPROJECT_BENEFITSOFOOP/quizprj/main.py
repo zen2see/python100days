@@ -4,8 +4,6 @@ from quiz_brain import QuizBrain
 from os import system, name
 import time
 
-
-
 # Clear function
 def clear():
     """ CLear the screen. """
