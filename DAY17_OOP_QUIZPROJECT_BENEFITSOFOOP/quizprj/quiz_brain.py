@@ -8,7 +8,7 @@ class QuizBrain:
         self.score = 0
 
     def more_questions(self): 
-        return self.question_number < len(self.question_list)
+        return self.question_number < len(self.question_list)  
       
     def askq(self):
         if self.more_questions():
@@ -17,17 +17,14 @@ class QuizBrain:
             return user_answer
         else:
             print("No more questions available.")
-            return False
+            return None
     
     def the_answer(self):
         if self.more_questions():
             theanswer = self.question_list[self.question_number].answer.lower()
             return theanswer
-        else:
-            return None
     
     def check_answer(self, user_answer, answer):
-        print(user_answer, answer)
         if user_answer == answer:
             print("Correct!")
             self.score += 1
@@ -35,6 +32,6 @@ class QuizBrain:
             print("Incorrect")
         print(f"The correct answer is: {self.the_answer()}")
         print(f"Your current score is: {self.score}/{self.question_number + 1}")
-        print("\n")
+    
     
     
