@@ -1,5 +1,5 @@
 from os import system, name
-import time
+import time, random
 from turtle import Turtle, Screen
 
 # docs.python.org/3.3/library/turtle.html
@@ -8,6 +8,7 @@ from turtle import Turtle, Screen
 # Running python -m tkinter should demonstrating a simple Tk interface
 # tcl.tk/man/tcl8.4/TkCmd/colors.htm
 # cs111.wellesley.edu/labs/lab01/colors
+# tinket.io/docs/colors
 
 # NOTES
 # home() = center of screen
@@ -34,21 +35,40 @@ t.color("green")
 screen = Screen()
 screen.title('Object-oriented turtle demo')
 screen.bgcolor("orange")
-screen.setup(width=600, height=600)
+screen.setup(width=800, height=600)
+colors = ["CornflowerBlue", "DarkOrchid", "IndianRed", "DeepSkyBlue", "LightSeaGreen", "SeaGreen"]
+
+def draw_shape(sides):
+    angle = 360 / sides
+    for _ in range(sides):
+        t.forward(50)
+        t.right(angle)
 
 def main():
-    for _ in range(20):
-        # Square
+    # for _ in range(52):
+        ## Square
         # t.forward(100)
         # t.right(90)
+        
+        ## Dashed line
+        # t.forward(10)
+        # t.penup()
+        # t.forward(10)
+        # t.pendown()
+     
+     ## Triangle, square, pentagon, hexagon, heptagon, octagon, nonagon and decagon
+     ## Divide by # of sides
+    for sides_num in range(3, 11): 
+        # t.color(random.choice(colors))   
+        draw_shape(sides_num)
+        # t.penup()
+        # t.forward(100) # Move forward to space out shapes
+        # t.pendown()
+        # time.sleep(1)
 
-        # Dashed line
-        t.forward(5)
-        t.penup()
-        t.forward(5)
-        t.pendown()
-
-    screen.mainloop()
+    #t.penup()
+    #t.setpos(0,20)        
+    screen.mainloop() 
     
 if __name__ == '__main__':
     main()
