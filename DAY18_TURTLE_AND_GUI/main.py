@@ -31,7 +31,7 @@ from turtle import Turtle, Screen
 
 t = Turtle()
 t.shape("turtle")
-t.color("green")
+# t.color("green")
 screen = Screen()
 screen.title('Object-oriented turtle demo')
 screen.bgcolor("orange")
@@ -59,7 +59,7 @@ def main():
      ## Triangle, square, pentagon, hexagon, heptagon, octagon, nonagon and decagon
      ## Divide by # of sides
     for sides_num in range(3, 11): 
-        # t.color(random.choice(colors))   
+        t.color(random.choice(colors))   
         draw_shape(sides_num)
         # t.penup()
         # t.forward(100) # Move forward to space out shapes
