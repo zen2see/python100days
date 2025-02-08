@@ -29,16 +29,7 @@ from turtle import Turtle, Screen
 # Stamp a copy of the turtle shape onto the canvas at the current turtle position. 
 # Return a stamp_id for that stamp, which can be used to delete it by calling clearstamp(stamp_id).
 
-t = Turtle()
-# t.shape("turtle")
-screen = Screen()
-screen.title('Object-oriented turtle demo')
-screen.bgcolor("grey")
-screen.colormode(255)
-screen.setup(width=800, height=600)
-colors = ["CornflowerBlue", "DarkOrchid", "IndianRed", "DeepSkyBlue", "LightSeaGreen", "SeaGreen"]
-angles = [0, 90, 180, 90, 270, 90, 270 ]
-lines = random.randint(10,55)
+
 
 # RANDOM COLOUR USING RGB
 def random_color():
@@ -48,24 +39,26 @@ def random_color():
     rgbcolor = (r,b,g)
     return rgbcolor
 
-def draw_random(lines):  
-    for _ in range(lines):
-        #color = random.choice(colors)
-        color = random_color()
-        length = random.randint(3,43)
-        thickness = random.randint(2,6)
-        angle = random.choice(angles)
-        t.color(color)
-        t.pensize(thickness)
-        t.forward(length)
-        t.setheading(angle)
-        t.speed("fast")
-        # time.sleep(.5)
+def draw_spirograph(gsize):
+        for _ in range(int(360 / gsize)):
+            color = random_color()
+            t.color(color)
+            t.circle(100)
+            t.setheading(t.heading() + gsize)
+            # time.sleep(.5) 
         
 def main():
-    draw_random(lines) 
-    screen.exitonclick()   
-    screen.mainloop() 
+    gapsize = random.randint(5, 10)
+    draw_spirograph(gapsize)
+    # screen.mainloop() 
     
 if __name__ == '__main__':
+    t = Turtle()
+    t.speed("fast")
+    screen = Screen()
+    screen.title('Object-oriented spirograph demo')
+    screen.bgcolor("grey")
+    screen.colormode(255)
+    screen.setup(width=800, height=600)
     main()
+    screen.exitonclick()    
