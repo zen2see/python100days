@@ -9,41 +9,48 @@ screen.bgcolor('grey')
 screen.colormode(255)
 screen.setup(width=500, height=400)
 
-def turtles():
-    tnew = []
+def turtles(tnew):
     for color in colors:
         tnew_turtle = t.clone()
         tnew_turtle.color(color)
         tnew_turtle.penup()
         tnew.append(tnew_turtle) 
-    
     y_position = -100
     for turtle in tnew:
         turtle.goto(x=-230, y=y_position)
         y_position += 40
-    
     return tnew
     
-def randommove():
-    rdist = random.randint(0, 10)
-    return rdist
+def randommove(tnew):
+    for turtle in tnew:
+        rdist = random.randint(0, 10)
+        turtle.goto(x=turtle.xcor() + rdist, y=turtle.ycor())
+    return tnew
 
-def race():
-    for turtle in turtles.tnew:
-        x_position = randommove()  
-        turtle.goto(turtle.x+x_position, y=None)
+def race(tnew):
+    randommove(tnew)
 
 def main():
+    tnew = []
     race_on = False
-    turtles()
+    turtles(tnew)
     t.hideturtle()
     user_bet = screen.textinput(
         title="Make your bet", prompt="Which turtle will win the race> Enter a color: ")
     if user_bet:
         race_on = True
     while race_on:
-        race()
-    
+        race(tnew)
+        for turtle in tnew:
+            if turtle.xcor() > 225:  # 225 is half of the width of the screen (500/2 - 25 for turtle)
+                race_on = False
+                winning_color = turtle.pencolor()
+                print(f"The winner is the {winning_color} turtle!")
+                if winning_color == user_bet:
+                    print("You won!")
+                else:
+                    print("You lost!")
+                break 
     screen.exitonclick()   
     screen.mainloop() 
 
