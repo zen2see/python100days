@@ -1,4 +1,6 @@
+import time
 from turtle import Turtle, Screen
+from snakesegment import Snakesegment
 import random
 
 """
@@ -19,13 +21,33 @@ Octagon: ((-10,20),(10,20),(20,10),(20,-10),(10,-20),(-10,-20),(-20,-10),(-20,10
 t = Turtle(shape="square")
 t.shapesize(1,1)
 
+snake = Snakesegment()
+
 # Draw a rectangle
-def rectangle(width, height):
-    for _ in range(2):
-        t.forward(width)
-        t.left(90)
-        t.forward(height)
-        t.left(90)
+# def rectangle(width, height):
+#     for _ in range(2):
+#         t.forward(width)
+#         t.left(90)
+#         t.forward(height)
+#         t.left(90)
+
+# # Draw Segments
+# def create_segments(start_position):
+#     segments = [] 
+#     for position in start_position:
+#         segment = Turtle(shape="square")
+#         segment.color('blue')
+#         segment.penup()
+#         segment.goto(position)
+#         segments.append(segment)
+#     return segments
+
+# def move(segments):
+#    for seg_num in range(len(segments) -1, 0, -1):
+#            newx = segments[seg_num -1].xcor()
+#            newy = segments[seg_num -1].ycor()
+#            segments[seg_num].goto(newx, newy)
+#    segments[0].forward(20)
 
 def main():
     """
@@ -43,34 +65,25 @@ def main():
     screen.colormode(255)
     screen.setup(width=600, height=600)
 
-    #Starting positions
-    start_position = [(0,0), (-20,0), (-40,0)]
-
-    for position in start_position:
-        segment = t.clone
-        # segment.color('blue')
-        segment.goto(position)
-    #screen.register_shape('rectangle', rectCors)
+    screen.listen()
+    screen.onkey(snake.up, "Up")
+    screen.onkey(snake.down, "Down")
+    screen.onkey(snake.left, "Left")
+    screen.onkey(snake.right, "Right")
 
     # Set the dimensions of the rectangle
     rectangle_width = 200
     rectangle_height = 100
 
-    # Position the turtle
-    t.penup()
-    t.color("white")
-    t.fillcolor("grey") # Set the fill color
-    t.goto(-rectangle_width//2, -rectangle_height//2)  # Center the rectangle
-    t.pendown()
-
-    # Draw the rectangle
-    t.begin_fill()
-    rectangle(rectangle_width, rectangle_height)
-    t.end_fill()
-
     # Hide the turtle
     t.hideturtle()
 
+    game_on = True
+    while game_on:
+        screen.update()
+        time.sleep(0.1)
+        snake.move()
+            
     screen.exitonclick()   
     screen.mainloop() 
 
