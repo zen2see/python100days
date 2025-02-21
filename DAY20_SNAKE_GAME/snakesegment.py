@@ -1,6 +1,7 @@
 from turtle import Turtle
 import time
 import sys
+from scoreboard import Scoreboard
 
 # Starting positions
 STARTING_POSITION = [(0,0), (-20,0), (-40,0)]
@@ -12,7 +13,7 @@ RIGHT = 0
 
 class Snakesegment(Turtle):
     def __init__(self):
-        #super().__init__()
+        super().__init__()
         self.segments = []
         self.create_snake()
         self.head = self.segments[0]
@@ -46,6 +47,7 @@ class Snakesegment(Turtle):
 
         # Add the new segment to the snake
         ##self.segments.append(new_segment)
+
     def extend(self):
         # Add a segment to the snake at the position of the last segment
         last_segment = self.segments[-1]
@@ -53,16 +55,17 @@ class Snakesegment(Turtle):
         self.add_segment(position)
 
     def move(self):
+        scoreboard = Scoreboard()
         for seg_num in range(len(self.segments) -1, 0, -1):
             newx = self.segments[seg_num -1].xcor()
             newy = self.segments[seg_num -1].ycor()
             if newx >= 280 or newy >= 290 or newx <= -285 or newy <= -280:
-                # print(f"Position: x = {newx}, y = {self.segments[seg_num - 1].ycor()}")
-                print(f"Position x: = {newx} , Position y: = {newy}")
-                time.sleep(2)
-                sys.exit()
+                # print(f"Position x: = {newx} , Position y: = {newy}")
+                time.sleep(1)
+                scoreboard.game_over()
+            #if newx
             self.segments[seg_num].goto(newx, newy)
-        self.segments[0].forward(MOVE_DIST)
+        self.head.forward(MOVE_DIST)
 
     def up(self):
         if self.head.heading() != DOWN:
@@ -79,3 +82,5 @@ class Snakesegment(Turtle):
     def right(self):
         if self.head.heading() != LEFT:
             self.head.setheading(RIGHT)
+    
+    
