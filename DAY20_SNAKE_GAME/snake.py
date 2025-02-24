@@ -83,3 +83,73 @@ def main():
 
 if __name__ == '__main__':
     main()
+
+    """
+    Levels and Speed: Increase the game's difficulty as the player's score increases by 
+    speeding up the snake's movement or adding obstacles.
+    # Add this before the loop
+    speed = 0.1
+    # Inside the loop
+    while game_on:
+    screen.update()
+    time.sleep(speed)
+    snake.move()
+    checkdist(scoreboard, snake, food)
+    
+    # Increase speed as score increases
+    if scoreboard.score % 5 == 0:  # Increase speed every 5 points
+        speed *= 0.9  # Adjust the factor as needed
+    
+    Scoreboard Enhancements: Display the top scores or track scores over multiple sessions.
+    # Add to __init__ method
+    self.high_scores = []
+
+    def display_high_scores(self):
+        self.clear()
+        self.goto(0, 0)
+        self.write("High Scores:", align=ALIGNMENT, font=FONT)
+        for index, score in enumerate(self.high_scores[:5]):
+            self.goto(0, -30 * (index + 1))  # Adjust position for each score
+            self.write(f"{index + 1}. {score}", align=ALIGNMENT, font=FONT)
+
+    def game_over(self):
+        self.goto(0, 0)
+        self.write("GAME OVER", align=ALIGNMENT, font=FONT)
+        self.high_scores.append(self.score)
+        self.high_scores.sort(reverse=True)
+        self.display_high_scores()
+        sys.exit()
+    Custom Shapes: Use the custom shapes you've defined for the snake or food.
+    # Register shapes at the beginning of main()
+    screen.register_shape('rectangle', ((-20,10),(20,10),(20,-10),(-20,-10)))
+    # Add more shapes as needed...
+
+    # Use the shapes
+    snake.shape('rectangle')
+    
+    Sound Effects: Add sound effects for when the snake eats the food, when the game starts, 
+    or when the game ends.
+    from playsound import playsound
+
+    def checkdist(scoreboard, snake, food):
+        if snake.head.distance(food) < 15:
+            scoreboard.increase_score()
+            food.goto(random.randint(-280, 260), random.randint(-280, 260))
+            snake.add_segment(snake.segments[-1].position())
+            playsound('eat_sound.mp3')  # Add the path to your sound file
+    5. Themes
+        Themes: Add different themes for the game (e.g., jungle, desert, underwater)
+        and change the snake and food appearances accordingly.
+        If you need help implementing any of these features, just let me know! Happy coding! 🐍🎮
+        themes = {
+            "jungle": {"bg": "green", "snake_color": "brown", "food_color": "red"},
+            "desert": {"bg": "yellow", "snake_color": "orange", "food_color": "blue"},
+            # Add more themes...
+        }
+
+        # Apply a theme
+        selected_theme = themes["jungle"]  # Choose a theme
+        screen.bgcolor(selected_theme["bg"])
+        snake.color(selected_theme["snake_color"])
+        food.color(selected_theme["food_color"])
+    """
