@@ -28,7 +28,6 @@ def checkdist(scoreboard, snake, food):
         # snake.add_segment((Snakesegment.xcor, Snakesegment.ycor))
         snake.add_segment(snake.segments[-1].position())      
         
-
 def setup_screen():
     screen = Screen()
     screen.title('Snake Game')
@@ -39,11 +38,13 @@ def setup_screen():
     return screen
 
 def main():
-    t = Turtle(shape="square")
-    t.shapesize(1,1)
+    #t = Turtle(shape="square")
+    #t.shapesize(1,1)
     snake = Snakesegment()
+    food = Food()
     screen = setup_screen()
     scoreboard = Scoreboard()
+    game_on = True
     """
     register_shape() function. The first argument is what you will name the shape; 'rectangle',
     in this case. The second argument is the coordinates, so save them as a variable.
@@ -54,31 +55,23 @@ def main():
     # s.register_shape('rectangle',rectCors);
     # t = Turtle(shape='rectangle')
     
-    screen.listen()
+    screen.listen()    
     screen.onkey(snake.up, "Up")
     screen.onkey(snake.down, "Down")
     screen.onkey(snake.left, "Left")
     screen.onkey(snake.right, "Right")
-
-    # Hide the turtle
-    # t.hideturtle()
-    snake.hideturtle()
     
-    # Add Food
-    food = Food()
-
     # Add Scoreboard
-    game_on = True
     while game_on:
         screen.update()
         time.sleep(0.1)
         snake.move()
         checkdist(scoreboard, snake, food)
-
+    
     if game_on == False:
+        time.sleep(2)
         scoreboard.game_over()
-
-    screen.exitonclick()   
+        screen.exitonclick() 
     screen.mainloop() 
 
 if __name__ == '__main__':
