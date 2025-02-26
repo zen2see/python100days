@@ -45,9 +45,23 @@ class Snakesegment(Turtle):
             if newx >= 280 or newy >= 290 or newx <= -285 or newy <= -280:
                 print(f"Position x: = {newx} , Position y: = {newy}")
                 scoreboard.game_over()
-                
+            # Check for collision with the walls # Another methd
+            # if self.head.xcor() >= 280 or self.head.ycor() >= 290 or self.head.xcor() <= -285 or self.head.ycor() <= -280:
+            # print(f"Position x: = {self.head.xcor()} , Position y: = {self.head.ycor()}")
+            # scoreboard.game_over()
+            # print(self.head)
         self.head.forward(MOVE_DIST)
+        # Check for collision with the tail
+        self.detect_collision_with_tail()
 
+    def detect_collision_with_tail(self):
+        scoreboard = Scoreboard()
+        for segment in self.segments[1:]:  # Skip the head (self.segments[0])
+            if self.head.distance(segment) < 10:  # Assuming 10 is the distance for collision
+                print("COLLISION with tail")
+                print(segment)
+                scoreboard.game_over()
+                
     def up(self):
         if self.head.heading() != DOWN:
             self.head.setheading(UP)

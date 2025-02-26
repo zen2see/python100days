@@ -30,9 +30,7 @@ class Scoreboard(Turtle):
         self.goto(0, 0)
         self.color("red")
         self.write(f"GAME OVER", align=ALIGNMENT, font=FONT)
-        import time, sys
-from turtle import Turtle
-
+    
 ALIGNMENT = "center"
 FONT = ("Courier", 24, "normal")
 
