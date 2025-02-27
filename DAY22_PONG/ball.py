@@ -6,27 +6,26 @@ class Ball(Turtle):
     def __init__(self):
         super().__init__()
         self.shape("circle")
-        self.penup()
         self.color("white")
         self.speed("fastest")
-        random_x = random.randint(-280, 280)
-        random_y = random.randint(-280, 280)
-        self.goto(random_x, random_y)
+        self.penup()
+        self.move_speed = .1
+        self.x_move = 10
+        self.y_move = 10
 
     def move(self):
-        scoreboard = Scoreboard()
-        for seg_num in range(len(self.segments) -1, 0, -1):
-            newx = self.segments[seg_num -1].xcor()
-            newy = self.segments[seg_num -1].ycor()
-            self.segments[seg_num].goto(newx, newy)
-            if newx >= 280 or newy >= 290 or newx <= -285 or newy <= -280:
-                print(f"Position x: = {newx} , Position y: = {newy}")
-                scoreboard.game_over()
-            # Check for collision with the walls # Another methd
-            # if self.head.xcor() >= 280 or self.head.ycor() >= 290 or self.head.xcor() <= -285 or self.head.ycor() <= -280:
-            # print(f"Position x: = {self.head.xcor()} , Position y: = {self.head.ycor()}")
-            # scoreboard.game_over()
-            # print(self.head)
-        self.head.forward(MOVE_DIST)
-        # Check for collision with the tail
-        self.detect_collision_with_tail()
+        new_x = self.xcor() + self.x_move
+        new_y = self.ycor() + self.y_move
+        self.goto(new_x, new_y)
+
+    def bounce_y(self):
+        self.y_move *= -1
+
+    def bounce_x(self):
+        self.x_move *= -1
+        self.move_speed *= 0.9
+
+    def reset_position(self):
+        self.goto(0, 0)
+        self.bounce_x()
+        self.move_speed = 0.1

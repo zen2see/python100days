@@ -2,32 +2,34 @@ import time, sys
 from turtle import Turtle
 
 ALIGNMENT = "center"
+RALIGNMENT = "right"
 FONT = ("Courier", 24, "normal")
 
 class Scoreboard(Turtle):
     def __init__(self):
         super().__init__()
-        self.score = 0
-        self.create_scoreboard()
-
-    def create_scoreboard(self):
-        self.clear()
-        self.penup()
         self.color("white")
-        self.goto(0, 260)
+        self.penup()
         self.hideturtle()
+        self.lscore = 0
+        self.rscore = 0
+        self.update_scoreboard()
 
     def update_scoreboard(self):
         self.clear()
-        self.write(f"Score: {self.score}", align=ALIGNMENT, font=FONT)
+        self.goto(-200, 300)
+        self.write(f"Score: {self.lscore}", align=ALIGNMENT, font=FONT)
+        self.goto(300, 300)
+        self.write(f"Score: {self.rscore}", align=RALIGNMENT, font=FONT)
+   
+    def l_point(self):
+        self.lscore += 1
+        self.update_scoreboard()
 
-    def increase_score(self):
-        self.score += 1
+    def r_point(self):
+        self.rscore += 1
         self.update_scoreboard()
 
     def game_over(self):
-        self.clear()
         self.goto(0, 0)
-        self.color("red")
-        self.write(f"GAME OVER", align=ALIGNMENT, font=FONT)
-    
+        self.write("GAME OVER", align="center", font=("Courier", 36, "normal"))
