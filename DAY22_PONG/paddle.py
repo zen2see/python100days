@@ -2,8 +2,8 @@ from turtle import Turtle
 from scoreboard import Scoreboard
 
 # Starting positions
-STARTING_POSITION1 = [(-400, 0)]
-STARTING_POSITION2 = [(400, 0)]
+STARTING_POSITION1 = [(-380, 0)]
+STARTING_POSITION2 = [(380, 0)]
 MOVE_DIST = 20
 
 class Paddle(Turtle):
@@ -17,9 +17,13 @@ class Paddle(Turtle):
 
     def move_up(self):
         new_y = self.ycor() + MOVE_DIST
+        if new_y >= 350:
+            new_y = 350
         self.goto(self.xcor(), new_y)
 
     def move_down(self):
         new_y = self.ycor() - MOVE_DIST
+        if new_y <= -350:
+            new_y = -250
         self.goto(self.xcor(), new_y)
     

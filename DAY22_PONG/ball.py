@@ -7,7 +7,6 @@ class Ball(Turtle):
         super().__init__()
         self.shape("circle")
         self.color("white")
-        self.speed("fastest")
         self.penup()
         self.move_speed = .1
         self.x_move = 10
@@ -26,6 +25,7 @@ class Ball(Turtle):
         self.move_speed *= 0.9
 
     def reset_position(self):
-        self.goto(0, 0)
-        self.bounce_x()
+        self.goto(0, random.randint(-290, 290))
         self.move_speed = 0.1
+        self.bounce_x()
+        

@@ -16,8 +16,8 @@ def setup_screen():
 
 def main(): 
     screen = setup_screen()  
-    paddle1 = Paddle((-350,0))
-    paddle2 = Paddle((350, 0))
+    paddle1 = Paddle((-385,0))
+    paddle2 = Paddle((380, 0))
     ball = Ball()
     scoreboard = Scoreboard()
     
@@ -38,7 +38,8 @@ def main():
             ball.bounce_y()
 
         # Detect collision with paddles
-        if (ball.distance(paddle1) < 50 and ball.xcor() < -320) or (ball.distance(paddle2) < 50 and ball.xcor() > 320):
+        if (ball.distance(paddle1) < 30 and ball.xcor() < -320) or (ball.distance(paddle2) < 30 and ball.xcor() > 320):
+            print(ball.xcor(), ball.ycor())
             ball.bounce_x()
 
         # Detect when paddle misses the ball
