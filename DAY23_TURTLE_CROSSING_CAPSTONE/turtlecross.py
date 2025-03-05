@@ -46,6 +46,7 @@ def main():
 
     game_on = True
     while game_on == True:
+        player
         screen.update()
         time.sleep(0.08)
         # player.move()
@@ -53,7 +54,7 @@ def main():
         # Detect collision with top and bottom walls
         if player.ycor() > 330:
             print("You made it")
-
+            screen.exitonclick()
         """    
         if ball.distance(paddle1) < 75 and ball.xcor() < -350:
             print(f"Collision with Paddle1 at: ({ball.xcor()}, {ball.ycor()})")
@@ -67,10 +68,10 @@ def main():
             ball.increase_speed()
             ball.bounce_x()
         """
-    if game_on == False:
-        time.sleep(2)
-        scoreboard.game_over()
-    screen.exitonclick() 
+        
+    #if game_on == False:
+    #    time.sleep(2)
+    #    scoreboard.game_over()
     # screen.mainloop() 
   
 if __name__ == '__main__':
