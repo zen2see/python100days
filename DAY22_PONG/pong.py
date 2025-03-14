@@ -28,6 +28,7 @@ def restart_game():
     ball.reset_position()
     scoreboard.reset()
 screen.onkey(restart_game, "r")
+
 """
 
 
