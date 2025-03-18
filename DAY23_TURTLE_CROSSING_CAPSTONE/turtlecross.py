@@ -27,17 +27,15 @@ def generate_car(cars):
         new_car = CarManager()
         collision_detected = any(new_car.is_collision(car) for car in cars)
         # Check if cars are in the same horizontal plane
-        same_plane_detected = any(abs(new_car.ycor() - car.ycor()) < 20 for car in cars)  
-        same_vertical_plane_detected = any(abs(new_car.xcor() - car.xcor()) < 20 for car in cars)  # Check if cars are in the same vertical plane
-        if not collision_detected and not same_plane_detected and not same_vertical_plane_detected:
+        same_horizontal_plane_detected = any(abs(new_car.ycor() - car.ycor()) < 20 for car in cars)  
+        # Check if cars are in the same vertical plane
+        same_vertical_plane_detected = any(abs(new_car.xcor() - car.xcor()) < 20 for car in cars)  
+        # Check for collisions
+        if not collision_detected and not same_horizontal_plane_detected and not same_vertical_plane_detected:
             cars.append(new_car) 
         else:
             print("Collision or same plane detected during car generation.")
             
-        if not collision_detected:
-            cars.append(new_car) 
-        else:
-            print("Collision detected during car generation.")
 
 def restart_game(screen, player, scoreboard, cars):
     screen.clearscreen()  # Clear the screen
