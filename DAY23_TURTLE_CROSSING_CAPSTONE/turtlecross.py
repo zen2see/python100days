@@ -87,6 +87,7 @@ def game_loop(screen, player, cars, scoreboard):
         if player.ycor() > 330:
             print("You made it")
             # Add point
+            scoreboard.levelup()
             scoreboard.point()
             screen.update()
             # Reset position after scoring

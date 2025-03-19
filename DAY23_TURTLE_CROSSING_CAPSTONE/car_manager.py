@@ -11,7 +11,7 @@ class CarManager(Turtle):
         self.color(random.choice(["red", "blue", "green", "yellow", "orange"]))
         self.penup()
         self.shapesize(stretch_wid=1, stretch_len=random.randint(2,4))
-        self.goto(random.randint(400, 405), random.randint(-340, 340))
+        self.goto(random.randint(400, 405), random.randint(-320, 340))
         # Assign random speed to each car
         # Use a different attribute name to avoid conflict with the speed method - DO Not use self.speed
         self.car_speed = random.randint(1, 10) 
