@@ -27,13 +27,18 @@ class Scoreboard(Turtle):
         self.score += 1
         if self.score >= self.hiscore:
             self.hiscore = self.score
-        self.update_scoreboard()        
+        self.update_scoreboard()    
+
+    def reset(self):
+        self.score = 0
+        self.update_scoreboard()    
 
     def game_over(self):
         self.goto(0, 0)
         self.write("GAME OVER", align="center", font=("Courier", 36, "normal"))
         self.update_scoreboard()  # Update high score when game over
-        time.sleep(3)
+
+
         
 
     

@@ -76,12 +76,17 @@ def game_loop(screen, player, cars, scoreboard):
                 # scoreboard.write("GAME OVER", align="center", font=("Courier", 24, "normal"))
                 print("collision")
                 game_on = False
+                print("Calling scoreboard.game_over()")
                 scoreboard.game_over()
+                screen.update() 
+                # Exit the funtion after the game over is called
+                return
         # Remove cars that are fully off-screen        
         cars = [car for car in cars if car.xcor() >= -400]
         # Detect collision with top and bottom walls
         if player.ycor() > 330:
             print("You made it")
+            # Add point
             scoreboard.point()
             screen.update()
             # Reset position after scoring
