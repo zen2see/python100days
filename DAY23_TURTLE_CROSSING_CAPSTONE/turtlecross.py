@@ -91,6 +91,9 @@ def game_loop(screen, player, cars, scoreboard):
             screen.update()
             # Reset position after scoring
             player.goto(0, -330)
+            # Increase car speed
+            for car in cars:
+                car.level_up()
             # screen.exitonclick()
 
 def main(): 
@@ -101,9 +104,6 @@ def main():
     setup_key_bindings(screen, player, scoreboard, cars)
     game_loop(screen, player, cars, scoreboard)
     screen.mainloop()     
-    #if game_on == False:
-    #    time.sleep(2)
-    #    scoreboard.game_over()
     
 if __name__ == '__main__':
     main()
