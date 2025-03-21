@@ -40,6 +40,7 @@ class Scoreboard(Turtle):
 
     def reset(self):
         self.score = 0
+        self.level = 1
         self.update_scoreboard()    
 
     def game_over(self):
