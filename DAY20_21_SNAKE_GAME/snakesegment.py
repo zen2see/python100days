@@ -10,11 +10,12 @@ LEFT = 180
 RIGHT = 0
 
 class Snakesegment(Turtle):
-    def __init__(self):
+    def __init__(self, scoreboard):
         super().__init__()
         self.segments = []
         self.create_snake()
         self.head = self.segments[0]
+        self.scoreboard = scoreboard
 
     def create_snake(self):
         for position in STARTING_POSITION:
@@ -37,14 +38,14 @@ class Snakesegment(Turtle):
         self.segments.append(segment)
 
     def move(self):
-        scoreboard = Scoreboard()
+        #scoreboard = Scoreboard()
         for seg_num in range(len(self.segments) -1, 0, -1):
             newx = self.segments[seg_num -1].xcor()
             newy = self.segments[seg_num -1].ycor()
             self.segments[seg_num].goto(newx, newy)
             if newx >= 280 or newy >= 290 or newx <= -285 or newy <= -280:
                 print(f"Position x: = {newx} , Position y: = {newy}")
-                scoreboard.game_over()
+                self.scoreboard.game_over()
             # Check for collision with the walls # Another methd
             # if self.head.xcor() >= 280 or self.head.ycor() >= 290 or self.head.xcor() <= -285 or self.head.ycor() <= -280:
             # print(f"Position x: = {self.head.xcor()} , Position y: = {self.head.ycor()}")
@@ -60,7 +61,7 @@ class Snakesegment(Turtle):
             if self.head.distance(segment) < 10:  # Assuming 10 is the distance for collision
                 print("COLLISION with tail")
                 print(segment)
-                scoreboard.game_over()
+                scoreboard.game_over(self)
                 
     def up(self):
         if self.head.heading() != DOWN:

@@ -25,7 +25,6 @@ def checkdist(scoreboard, snake, food):
     if snake.head.distance(food) < 15:
         scoreboard.increase_score()
         food.goto(random.randint(-280, 260), random.randint(-280, 260))
-        # snake.add_segment((Snakesegment.xcor, Snakesegment.ycor))
         snake.add_segment(snake.segments[-1].position())   
  
 def setup_screen():
@@ -38,12 +37,10 @@ def setup_screen():
     return screen
 
 def main():
-    #t = Turtle(shape="square")
-    #t.shapesize(1,1)
-    snake = Snakesegment()
-    food = Food()
     screen = setup_screen()
     scoreboard = Scoreboard()
+    snake = Snakesegment(scoreboard)
+    food = Food()
     game_on = True
     """
     register_shape() function. The first argument is what you will name the shape; 'rectangle',
