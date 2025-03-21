@@ -22,9 +22,9 @@ class Scoreboard(Turtle):
     def update_scoreboard(self):
         self.clear()
         self.goto(-330, 320)
-        self.write(f"Score: { self.score}", align=LALIGNMENT, font=FONT)
+        self.write(f"Score: {self.score}", align=LALIGNMENT, font=FONT)
         self.goto(0, 320)
-        self.write(f"Level: { self.level}", align=ALIGNMENT, font=FONT2)
+        self.write(f"Level: {self.level}", align=ALIGNMENT, font=FONT2)
         self.goto(330, 320)
         self.write(f"Hi-Score: {self.hiscore}", align=RALIGNMENT, font=FONT)
    
