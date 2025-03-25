@@ -24,6 +24,9 @@ else:
 ** Delete Folder
 import os
 os.rmdir("myfolder")
+
+Absolute - relative to your root directory
+Relative - relative to your current directory
 """
 def main():
     # Because "r" for read, and "t" for text are the default values, you do not need to specify them.
