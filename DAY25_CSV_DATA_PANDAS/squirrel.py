@@ -1,5 +1,9 @@
 import pandas
 
+# THE DATA
+"https://data.cityofnewyork.us/Environment/\
+2018-Central-Park-Squirrel-Census-Squirrel-Data/vfnx-vebw/about_data"
+
 # GET SQUIRREL DATA INTO A DATAFRAME
 squirrel_data = pandas.read_csv('2018_Central_Park_Squirrel_Census_-_Squirrel_Data.csv')
 # MAKE A DATAFRAME
@@ -77,6 +81,6 @@ def main():
     print("Grey squirrel count: ", grey_squirrels_count(),)
     # fixed_width_cols(find_max_col_width(read_file()))
     fur_color_to_csv()
-    
+
 if __name__ == '__main__':
     main()
