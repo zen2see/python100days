@@ -67,15 +67,16 @@ def fur_color_to_csv():
     # MAKE A DATAFRAME
     df_fc = pandas.DataFrame(data_dict)
     # CAPITALIZE THE HEADER 
-    df_fc.columns = [col.capitalize() for col in df_fc.columns]
+    # df_fc.columns = [col.capitalize() for col in df_fc.columns]
+    # CAPITALIZE THE ENTIRE HEADER
+    df_fc.columns = [col.upper() for col in df_fc.columns]
     # CONVERT TO CSV AND CHANGE DELIMETER TO SPACES
     df_fc.to_csv("dataframe_squirrel_colors.csv", sep=',', index=False, header=True)
 
-
 def main():
-    print(grey_squirrels_count(),)
-    # file_to_csv()
+    print("Grey squirrel count: ", grey_squirrels_count(),)
+    # fixed_width_cols(find_max_col_width(read_file()))
     fur_color_to_csv()
-
+    
 if __name__ == '__main__':
     main()

@@ -73,6 +73,8 @@ def cvsreader():
     
     # CAPITALIZE THE HEADER 
     dataframe.columns = [col.capitalize() for col in dataframe.columns]
+    # CAPITALIZE THE ENTIRE HEADER
+    dataframe.columns = [col.upper() for col in dataframe.columns]
     
     # CONVERT TO CSV AND CHANGE DELIMETER TO SPACES
     dataframe.to_csv("dataframe_students_scores.csv", sep=',', index=False, header=True)
