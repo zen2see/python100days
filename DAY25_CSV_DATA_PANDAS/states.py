@@ -4,40 +4,89 @@ import random
 from player import Player
 from turtle import Turtle, Screen
 
-class StateGame:
-    def __init__(self):
-        self.screen = self.setup_screen()
-        self.player = Player()
+# class StateGame:
+#     def __init__(self):
+#         self.screen = self.setup_screen()
+#         self.player = Player()
 
-    def game_over(self):
-        self.goto(0, 0)
-        self.write("GAME OVER", align="center", font=("Courier", 36, "bold"))
+#     def game_over(self):
+#         self.goto(0, 0)
+#         self.write("GAME OVER", align="center", font=("Courier", 36, "bold"))
 
-    def setup_screen(self):
-        screen = Screen()
-        screen.title("U.S. States Game")
-        screen.bgcolor('black')
-        screen.colormode(255)
-        screen.setup(width=700, height=700)
-        screen.tracer(0)
-        image = "blank_states_img.gif"
-        screen.addshape(image)
-        screen.bgpic(image)
-        return screen
+#     def setup_screen(self):
+#         screen = Screen()
+#         screen.title("U.S. States Game")
+#         screen.bgcolor('black')
+#         screen.colormode(255)
+#         screen.setup(width=700, height=700)
+#         screen.tracer(0)
+#         image = "blank_states_img.gif"
+#         screen.addshape(image)
+#         screen.bgpic(image)
+#         return screen
 
-    def flash_player(self):
-        self.player.color("yellow")
-        self.screen.update()
-        time.sleep(0.1)
-        self.player.color("blue")
+#     def flash_player(self):
+#         self.player.color("yellow")
+#         self.screen.update()
+#         time.sleep(0.1)
+#         self.player.color("blue")
 
-    def main(self):
-        self.screen.mainloop()
+#     def get_mouse_click_coord(x,y)
+#         print(x,y)
+
+#     def main(self):
+#         self.screen.mainloop()
+
+#  if __name__ == '__main__':
+#     game = StateGame()
+#     game.main()
+
+def setup_screen():
+    screen = Screen()
+    screen.title("U.S. States Game")
+    screen.bgcolor('black')
+    screen.colormode(255)
+    screen.setup(width=700, height=700)
+    screen.tracer(0)
+    image = "blank_states_img.gif"
+    screen.addshape(image)
+    screen.bgpic(image)
+    return screen
+
+def flash_player(player):
+    player.color("yellow")
+    screen.update()
+    time.sleep(0.1)
+    player.color("blue")
+
+def display_state(player, state_name, states_data):
+    state_data = states_data[states_data.state == state_name]
+    if not state_data.empty:
+        # x, y = int(state_data.x), int(state_data.y)
+        x, y = int(state_data.x.iloc[0]), int(state_data.y.iloc[0])
+        player.goto(x, y)
+        player.write(state_name, align="center", font=("Courier", 12, "normal"))
+
+def game_over(player):
+    player.goto(0, 0)
+    player.write("GAME OVER", align="center", font=("Courier", 36, "bold"))
+
+def main():
+    global screen
+    screen = setup_screen()
+    player = Turtle()
+    player.penup()
+    player.hideturtle()
+    states_data = pandas.read_csv("50_states.csv")
+
+    display_state(player, "California", states_data)
+    display_state(player, "Texas", states_data)
+    display_state(player, "New York", states_data)
+
+    screen.mainloop()
     
-
 if __name__ == '__main__':
-    game = StateGame()
-    game.main()
+    main()
     
 
 
