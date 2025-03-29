@@ -59,14 +59,34 @@ def flash_player(player):
     time.sleep(0.1)
     player.color("blue")
 
-def display_state(player, state_name, states_data):
-    state_data = states_data[states_data.state == state_name]
+def get_statedata():
+    statedata = pandas.read_csv("50_states.csv")
+    return statedata
+
+def get_data_into_list():
+    all_states = get_statedata().state.to_list()
+    return all_states
+    
+def display_state(player, state_name):
+    state_data = get_statedata[get_statedata.state == state_name]
     if not state_data.empty:
         # x, y = int(state_data.x), int(state_data.y)
         x, y = int(state_data.x.iloc[0]), int(state_data.y.iloc[0])
         player.goto(x, y)
         player.write(state_name, align="center", font=("Courier", 12, "normal"))
 
+def get_mouse_click_coor(x, y):
+    print(f"Mouse clicked at ({x}, {y}")
+
+def ask_question():
+    answer_state = screen.textinput(title="Guess the State", prompt="What's another state's name?")
+    return answer_state.title()
+
+def check_answer():
+    if ask_question() in get_data_into_list().title():
+        state
+        question_result == ask_question()  
+    
 def game_over(player):
     player.goto(0, 0)
     player.write("GAME OVER", align="center", font=("Courier", 36, "bold"))
@@ -77,16 +97,25 @@ def main():
     player = Turtle()
     player.penup()
     player.hideturtle()
-    states_data = pandas.read_csv("50_states.csv")
-
-    display_state(player, "California", states_data)
-    display_state(player, "Texas", states_data)
-    display_state(player, "New York", states_data)
-
+    statedata = get_data_into_list()
+    display_state(player, ask_question(), )
+    print(check_answer())
+    #print(get_data_into_list())
+    # display_state(player, "California", states_data)
+    # display_state(player, "Texas", states_data)
+    # display_state(player, "New York", states_data)
+    screen.onscreenclick(get_mouse_click_coor)
     screen.mainloop()
     
 if __name__ == '__main__':
     main()
     
-
+"""
+Convert the guess to Title case
+Check if the guess ig among the 50 states
+Write correc tguesses onto the map
+Use a loop to allow the user to keep guessing
+Recod the correct guees in a list
+Keep Track of the score
+"""
 
