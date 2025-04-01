@@ -78,7 +78,16 @@ def cvsreader():
     
     # CONVERT TO CSV AND CHANGE DELIMETER TO SPACES
     dataframe.to_csv("dataframe_students_scores.csv", sep=',', index=False, header=True)
-   
+
+    # PRINT TEMPS AS A LIST WITHOUT PANDAS
+    def get_temp_into_list():
+        all_temps = data.Temp.to_list()
+        print(f"\nAll temps in a list: {all_temps}")  
+  
+    get_temp_into_list()
+
+
+
 def main():
     cvsreader()
 

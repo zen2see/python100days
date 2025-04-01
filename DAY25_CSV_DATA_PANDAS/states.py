@@ -68,7 +68,8 @@ def get_data_into_list():
     return all_states
     
 def display_state(player, state_name):
-    state_data = get_statedata[get_statedata.state == state_name]
+    state_data = get_statedata()
+    state_data = state_data[state_data.state == state_name]
     if not state_data.empty:
         # x, y = int(state_data.x), int(state_data.y)
         x, y = int(state_data.x.iloc[0]), int(state_data.y.iloc[0])
@@ -78,35 +79,53 @@ def display_state(player, state_name):
 def get_mouse_click_coor(x, y):
     print(f"Mouse clicked at ({x}, {y}")
 
-def ask_question():
-    answer_state = screen.textinput(title="Guess the State", prompt="What's another state's name?")
-    return answer_state.title()
+def ask_question(guessed_states, screen):
+    screen = Screen()
+    #answer_state = screen.textinput(title=f"Guess the State", prompt="What's another state's name?")
+    answer_state = screen.textinput(title=f"{len(guessed_states)}/50 States Correct", prompt="What's another state's name?")
+    return answer_state
 
-def check_answer():
-    if ask_question() in get_data_into_list().title():
-        state
-        question_result == ask_question()  
-    
+def check_answer(answer_state, guessed_states):
+    if answer_state in get_data_into_list():
+        guessed_states.append(answer_state)
+    else:
+        print("False")
+
 def game_over(player):
     player.goto(0, 0)
     player.write("GAME OVER", align="center", font=("Courier", 36, "bold"))
 
+def close_program(screen, running):
+    running[0] = False
+    screen.bye()
+
 def main():
-    global screen
     screen = setup_screen()
     player = Turtle()
     player.penup()
     player.hideturtle()
+    guessed_states = []
     statedata = get_data_into_list()
-    display_state(player, ask_question(), )
-    print(check_answer())
-    #print(get_data_into_list())
-    # display_state(player, "California", states_data)
+    running = [True]  # Use a list to allow modification within close_program
+    screen.getcanvas().winfo_toplevel().protocol("WM_DELETE_WINDOW", lambda: close_program(screen, running))
+    while len(guessed_states) < 5 and running[0]:
+        answer_state = ask_question(guessed_states, screen)
+        if answer_state:
+            check_answer(answer_state, guessed_states)
+            display_state(player, answer_state)
+    screen.onscreenclick(get_mouse_click_coor)  
+    #display_state(player, ask_question(guessed_states) )
+    # print(check_answer())
+    # print(f"statedata: {statedata}")
+    # print(get_data_into_list())
+    # print(get_data_into_list())
+    # display_state(player, "California")
     # display_state(player, "Texas", states_data)
     # display_state(player, "New York", states_data)
-    screen.onscreenclick(get_mouse_click_coor)
-    screen.mainloop()
-    
+    #screen.onscreenclick(get_mouse_click_coor)
+    screen.mainloop() # Keep screen open
+    screen.exitonclick()
+
 if __name__ == '__main__':
     main()
     
