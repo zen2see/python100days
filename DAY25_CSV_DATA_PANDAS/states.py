@@ -167,7 +167,6 @@ def get_mouse_click_coor(x, y):
 """Prompts the user to guess a state name."""
 def ask_question(guessed_states, screen):
     # screen = Screen()
-    #answer_state = screen.textinput(title=f"Guess the State", prompt="What's another state's name?")
     answer_state = screen.textinput(title=f"{len(guessed_states)}/50 States Correct", prompt="What's the state's name?")
     # Check to make sure there is text in the answer before converting the case with title()
     if answer_state:
@@ -179,10 +178,13 @@ def check_answer(answer_state, guessed_states, all_states):
     if answer_state in all_states:
         guessed_states.append(answer_state)
 
+"""Validates the user's guess and updates the guessed states list USING LIST COMPREHENSION."""
+def check_answer_lc(answer_state, guessed_states, all_states):
+        guessed_states += [answer_state] if answer_state in all_states else []
+
 """Returns a list of states that have not been guessed yet."""
 def get_states_not_guessed(guessed_states, all_states):
     missing_states = [state for state in all_states if state not in guessed_states]
-    # print(missing_states)
     return missing_states
 
 """Displays the game over message."""
@@ -206,15 +208,17 @@ def main():
     running = [True]  # Use a list to allow modification within close_program
 
     screen.getcanvas().winfo_toplevel().protocol("WM_DELETE_WINDOW", lambda: close_program(screen, running))
+    
     while len(guessed_states) < 5 and running[0]:
         answer_state = ask_question(guessed_states, screen)
         if answer_state:
             if answer_state.lower() == "exit":
                 close_program(screen, running)
                 break
-            check_answer(answer_state, guessed_states, all_states)
+            check_answer_lc(answer_state, guessed_states, all_states)
             display_state(player, answer_state, statedata)
             #get_states_not_guessed(guessed_states, all_states)
+    
     if running[0]:  # Check if the screen is still active before setting up the click event
         screen.onscreenclick(get_mouse_click_coor)
         screen.mainloop() # Keep screen open
@@ -223,9 +227,10 @@ def main():
     # Print the states not guessed after the loop ends
     missing_states = get_states_not_guessed(guessed_states, all_states)
     if missing_states:
-        # print(missing_states)
-        missing_states_list = pandas.DataFrame(missing_states)
-        missing_states_list.to_csv("Missing_States.csv")
+        missing_states_list = pandas.DataFrame(missing_states, columns=["STATES"]) 
+        # By default, pandas includes an index when saving a DataFrame to a CSV
+        # To fix this, you can modify the code to exclude the index when saving DataFrame
+        missing_states_list.to_csv("Missing_States.csv", index=False)
     
 if __name__ == '__main__':
     main()

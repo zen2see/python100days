@@ -51,8 +51,9 @@ def squared_range():
 def filter_even_numbers():
     list_of_string_numbers = ['9', '0', '32', '8', '2', '8', '64', '29', '42', '99']
     numbers = [int(strnum) for strnum in list_of_string_numbers]
-    evans = [num for num in numbers if num % 2 == 0]
-    return evans
+    evens = [num for num in numbers if num % 2 == 0]
+    return evens
+
 # READ FILES AND CONVERT THEM TO NUMBERS
 def read_numbers_from_file(file_path):
     numbers = []
@@ -68,6 +69,7 @@ def read_numbers_from_file(file_path):
         print(f"File not found: {file_path}")
     return numbers
 
+# FINDING COMMON NUMBERS IN TWO DIFFERENT FILES
 def find_common_numbers(file1_path, file2_path):
     file1_numbers = read_numbers_from_file(file1_path)
     file2_numbers = read_numbers_from_file(file2_path)
@@ -83,7 +85,6 @@ def find_common_numbers(file1_path, file2_path):
 #         return common_lines
 #     except FileNotFoundError:
 #         return "One or both files not found."
-
 
 # MAIN FUNCTION   
 def main():
@@ -106,3 +107,4 @@ def main():
 # RUN THE PROGRAM MAIN
 if __name__ == '__main__':
     main()
+    
