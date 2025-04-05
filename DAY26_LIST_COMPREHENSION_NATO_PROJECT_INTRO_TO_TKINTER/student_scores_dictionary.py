@@ -1,7 +1,7 @@
 import random
 
 # LIST OF NAMES
-names  =['Alex', 'Beth', 'Caroline', 'Dave', 'Eleanor', 'Freddie']
+names  = ['Alex', 'Beth', 'Caroline', 'Dave', 'Eleanor', 'Freddie']
 
 # DICTIONARY OF SCORES {key:value}
 student_scores = {student:random.randint(1, 100) for student in names}
