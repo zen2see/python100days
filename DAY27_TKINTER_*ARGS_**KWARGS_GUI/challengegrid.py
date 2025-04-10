@@ -29,7 +29,7 @@ def setup_screen():
     input.grid(column=3, row=2)
 
      # Bind the focus event to clear the placeholder text
-    input.bind("<FocusIn>", lambda event: clear_placeholder(event, input))
+    # input.bind("<FocusIn>", lambda event: clear_placeholder(event, input))
 
     # BUTTON 1
     """
@@ -44,6 +44,7 @@ def setup_screen():
     button = Button(text="Click Me", command=lambda: button_clicked(input, my_label))
     #button.pack()
     button.grid(column=1, row=1)
+    
 
     button2 = Button(text="2nd Button")
     button2.grid(column=2, row=0)
